@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Care+ | Doctor Dashboard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__logo-mark">C+</div>
+      <span class="sidebar__brand-name">Care+</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Doctor navigation">
+      <a href="doctor-dashboard.html" class="sidebar__link is-active" data-nav="dashboard">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="patients">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>My Patients</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="appointments">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+        <span>Appointments</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="consultations">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <span>Consultations</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="records">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        <span>Medical Records</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="prescriptions">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 0 0-7-7l-10 10a4.95 4.95 0 0 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>
+        <span>Prescriptions</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="notifications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span>Notifications</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="settings">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a href="#" class="sidebar__link sidebar__link--logout" data-action="logout">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__greeting-block">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+          <div class="header__greeting">
+            <h1>Good Morning, Dr. Joseph</h1>
+            <p class="header__subtitle">Here is an overview of your patients and consultations today.</p>
+          </div>
+        </div>
+
+        <div class="header__actions">
+          <!-- Notifications -->
+          <div class="dropdown">
+            <button class="icon-button" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+              <span class="badge-dot"></span>
+            </button>
+            <div class="dropdown__panel" id="notifPanel" role="menu">
+              <p class="dropdown__title">Notifications</p>
+              <div class="notification-item">
+                <div class="notification-item__icon">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Upcoming consultation with John Mathew at 10:00 AM.</p>
+                  <p class="notification-item__time">15 minutes ago</p>
+                </div>
+              </div>
+              <div class="notification-item">
+                <div class="notification-item__icon">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">New appointment booked by Mary Thomas.</p>
+                  <p class="notification-item__time">1 hour ago</p>
+                </div>
+              </div>
+              <div class="notification-item">
+                <div class="notification-item__icon">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Follow-up reminder for Ravi Kumar tomorrow.</p>
+                  <p class="notification-item__time">Yesterday</p>
+                </div>
+              </div>
+              <div class="notification-item">
+                <div class="notification-item__icon">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6H4l8 14 8-14h-5V2z"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Prescription for Anna George was sent successfully.</p>
+                  <p class="notification-item__time">Yesterday</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-trigger" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar">DJ</div>
+              <span class="profile-trigger__name">Dr. Joseph</span>
+            </button>
+            <div class="dropdown__panel" id="profilePanel" role="menu">
+              <p class="profile-panel__name">Dr. Joseph Mathew</p>
+              <p class="profile-panel__meta">Cardiologist &middot; License CP-DOC-118</p>
+              <div class="profile-panel__list">
+                <a href="#" data-nav="settings"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg> My Profile</a>
+                <a href="#" data-nav="settings"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Settings</a>
+                <a href="#" class="danger" data-action="logout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg> Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- TODAY'S OVERVIEW -->
+      <section aria-labelledby="overview-heading">
+        <div class="section-heading">
+          <h2 id="overview-heading">Today's Overview</h2>
+        </div>
+        <div class="stat-grid">
+          <div class="card stat-card">
+            <div class="stat-card__icon accent-icon-blue">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <p class="stat-card__value">24</p>
+              <p class="stat-card__label">Total Patients</p>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-card__icon accent-icon-green">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+            </div>
+            <div>
+              <p class="stat-card__value">6</p>
+              <p class="stat-card__label">Today's Appointments</p>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-card__icon accent-icon-amber">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <p class="stat-card__value">2</p>
+              <p class="stat-card__label">Pending Follow-ups</p>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-card__icon accent-icon-purple">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <div>
+              <p class="stat-card__value">3</p>
+              <p class="stat-card__label">Upcoming Consultations</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TODAY'S CONSULTATIONS -->
+      <section aria-labelledby="consult-heading">
+        <div class="section-heading">
+          <h2 id="consult-heading">Today's Consultations</h2>
+          <a href="#" class="section-heading__link" data-nav="consultations">View all</a>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Patient</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="Time">10:00 AM</td>
+                  <td data-label="Patient">
+                    <div class="table-patient"><span class="table-avatar">JM</span> John Mathew</div>
+                  </td>
+                  <td data-label="Type">Video Consultation</td>
+                  <td data-label="Status"><span class="status-pill status-pill--upcoming">Upcoming</span></td>
+                  <td data-label="Action"><button class="btn btn-primary btn-sm join-btn" data-patient="John Mathew">Join</button></td>
+                </tr>
+                <tr>
+                  <td data-label="Time">11:30 AM</td>
+                  <td data-label="Patient">
+                    <div class="table-patient"><span class="table-avatar">MT</span> Mary Thomas</div>
+                  </td>
+                  <td data-label="Type">Voice Consultation</td>
+                  <td data-label="Status"><span class="status-pill status-pill--upcoming">Upcoming</span></td>
+                  <td data-label="Action"><button class="btn btn-primary btn-sm join-btn" data-patient="Mary Thomas">Join</button></td>
+                </tr>
+                <tr>
+                  <td data-label="Time">2:00 PM</td>
+                  <td data-label="Patient">
+                    <div class="table-patient"><span class="table-avatar">RK</span> Ravi Kumar</div>
+                  </td>
+                  <td data-label="Type">Video Consultation</td>
+                  <td data-label="Status"><span class="status-pill status-pill--upcoming">Upcoming</span></td>
+                  <td data-label="Action"><button class="btn btn-primary btn-sm join-btn" data-patient="Ravi Kumar">Join</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK ACTIONS -->
+      <section aria-labelledby="quick-heading">
+        <div class="section-heading">
+          <h2 id="quick-heading">Quick Actions</h2>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-action" data-nav="patients" data-toast="Opening My Patients">
+            <div class="quick-action__icon accent-icon-blue">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <span class="quick-action__label">My Patients</span>
+          </button>
+          <button class="quick-action" data-nav="appointments" data-toast="Opening Appointments">
+            <div class="quick-action__icon accent-icon-green">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+            </div>
+            <span class="quick-action__label">Appointments</span>
+          </button>
+          <button class="quick-action" data-nav="records" data-toast="Opening Medical Records">
+            <div class="quick-action__icon accent-icon-teal">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            </div>
+            <span class="quick-action__label">Medical Records</span>
+          </button>
+          <button class="quick-action" data-nav="prescriptions" data-toast="Opening Prescriptions">
+            <div class="quick-action__icon accent-icon-purple">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 0 0-7-7l-10 10a4.95 4.95 0 0 0 7 7z"/><path d="m8.5 8.5 7 7"/></svg>
+            </div>
+            <span class="quick-action__label">Prescriptions</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- RECENT PATIENTS + PENDING FOLLOW-UPS -->
+      <section class="two-col" aria-label="Recent patients and follow-ups">
+        <div class="card">
+          <div class="section-heading">
+            <h2>Recent Patients</h2>
+            <a href="#" class="section-heading__link" data-nav="patients">View all</a>
+          </div>
+          <div class="patient-list">
+            <div class="patient-row">
+              <span class="table-avatar">JM</span>
+              <div class="patient-row__info">
+                <p class="patient-row__name">John Mathew</p>
+                <p class="patient-row__meta">Age 64 &middot; Hypertension &middot; Last visit: 3 Aug</p>
+              </div>
+              <button class="btn btn-outline btn-sm" data-toast="Opening John Mathew's profile">View</button>
+            </div>
+            <div class="patient-row">
+              <span class="table-avatar">MT</span>
+              <div class="patient-row__info">
+                <p class="patient-row__name">Mary Thomas</p>
+                <p class="patient-row__meta">Age 71 &middot; Diabetes Type 2 &middot; Last visit: 30 Jul</p>
+              </div>
+              <button class="btn btn-outline btn-sm" data-toast="Opening Mary Thomas's profile">View</button>
+            </div>
+            <div class="patient-row">
+              <span class="table-avatar">RK</span>
+              <div class="patient-row__info">
+                <p class="patient-row__name">Ravi Kumar</p>
+                <p class="patient-row__meta">Age 58 &middot; Cardiac Follow-up &middot; Last visit: 27 Jul</p>
+              </div>
+              <button class="btn btn-outline btn-sm" data-toast="Opening Ravi Kumar's profile">View</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-heading">
+            <h2>Pending Follow-ups</h2>
+          </div>
+          <div class="followup-list">
+            <div class="update-item">
+              <div class="update-item__icon accent-icon-amber">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <p class="update-item__title">Anna George</p>
+                <p class="update-item__meta">Follow-up due: 14 Aug</p>
+                <span class="status-pill status-pill--warning" style="margin-top:6px;">Pending</span>
+              </div>
+            </div>
+            <div class="update-item">
+              <div class="update-item__icon accent-icon-amber">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <p class="update-item__title">Ravi Kumar</p>
+                <p class="update-item__meta">Follow-up due: 16 Aug</p>
+                <span class="status-pill status-pill--warning" style="margin-top:6px;">Pending</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- CONSULTATION MODAL -->
+<div class="modal-overlay" id="consultModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="consultModalTitle">
+    <div class="modal__icon">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+    </div>
+    <h3 class="modal__title" id="consultModalTitle">Consultation ready to begin</h3>
+    <p class="modal__text" id="consultModalText">This is a placeholder screen. Video/voice calling functionality will be connected once the backend and calling service are integrated.</p>
+    <div class="modal__actions">
+      <button class="btn btn-outline" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" data-close-modal>Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Care+ | Family Dashboard</title>
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__logo-mark">C+</div>
+      <div>
+        <span class="sidebar__brand-name">Care+</span>
+        <span class="role-badge role-badge--family" style="margin-left:6px;">Family</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Family member navigation">
+      <a href="#overviewTab" class="sidebar__link is-active" data-nav="dashboard" data-family-tab="overview">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="#overviewTab" class="sidebar__link" data-nav="health" data-family-tab="overview">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span data-i18n="nav_health_updates">Health &amp; Vitals</span>
+      </a>
+      <a href="#medicationsTab" class="sidebar__link" data-nav="medication" data-family-tab="medications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M5 12h14"/><path d="M9 7h2M9 17h2"/></svg>
+        <span data-i18n="nav_medication_updates">Medications</span>
+      </a>
+      <a href="#medicationsTab" class="sidebar__link" data-nav="appointments" data-family-tab="medications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+        <span data-i18n="nav_appointments">Appointments</span>
+      </a>
+      <a href="#contactsTab" class="sidebar__link" data-nav="contacts" data-family-tab="contacts">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span data-i18n="nav_contacts">Family Contacts</span>
+      </a>
+      <a href="#notificationsTab" class="sidebar__link" data-nav="notifications" data-family-tab="notifications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span data-i18n="nav_notifications">Notifications</span>
+      </a>
+      <a href="#settingsTab" class="sidebar__link" data-nav="settings" data-family-tab="settings">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span data-i18n="nav_settings">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a href="#" class="sidebar__link sidebar__link--logout" data-action="logout">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span data-i18n="nav_logout">Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__greeting-block">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+          <div class="header__greeting">
+            <h1>Good Morning, Priya</h1>
+            <p class="header__subtitle">Monitoring Anitha Suresh &middot; All vitals stable</p>
+          </div>
+        </div>
+
+        <div class="header__actions">
+          <div class="header-actions-group">
+            <!-- Language Selector -->
+            <select class="lang-selector header-select" aria-label="Select Language">
+              <option value="en">English</option>
+              <option value="ml">മലയാളം</option>
+            </select>
+
+            <!-- Accessibility Quick Button -->
+            <button class="header-pill-btn" data-action="open-a11y" aria-label="Accessibility Settings">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              <span data-i18n="a11y_btn">Accessibility</span>
+            </button>
+
+            <!-- Voice Navigation Integration Point -->
+            <button class="header-pill-btn header-pill-btn--voice" data-action="open-voice" aria-label="Voice Navigation">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              <span data-i18n="voice_nav_btn">🎙 Voice Nav</span>
+            </button>
+          </div>
+
+          <!-- Notifications Dropdown -->
+          <div class="dropdown">
+            <button class="icon-button" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+              <span class="badge-dot" id="notifCountBadge">3</span>
+            </button>
+            <div class="dropdown__panel" id="notifPanel" role="menu">
+              <p class="dropdown__title" data-i18n="nav_notifications">Notifications</p>
+              <div class="notification-item">
+                <div class="notification-item__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Morning medication taken by Anitha Suresh.</p>
+                  <p class="notification-item__time">15 minutes ago</p>
+                </div>
+              </div>
+              <div class="notification-item">
+                <div class="notification-item__icon accent-icon-blue">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Doctor appointment today at 3:00 PM with Dr. Joseph.</p>
+                  <p class="notification-item__time">1 hour ago</p>
+                </div>
+              </div>
+              <div class="notification-item">
+                <div class="notification-item__icon accent-icon-teal">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <div>
+                  <p class="notification-item__text">Blood pressure reading normal: 120/80 mmHg.</p>
+                  <p class="notification-item__time">3 hours ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Dropdown -->
+          <div class="dropdown">
+            <button class="profile-trigger" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar">PS</div>
+              <span class="profile-trigger__name">Priya Suresh</span>
+            </button>
+            <div class="dropdown__panel" id="profilePanel" role="menu">
+              <p class="profile-panel__name">Priya Suresh</p>
+              <p class="profile-panel__meta">Family Member &middot; Daughter</p>
+              <div class="profile-panel__list">
+                <a href="#settingsTab" data-switch-tab="settings"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg> Family Account</a>
+                <a href="#" data-action="open-a11y"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> Accessibility</a>
+                <a href="../admin/admin-dashboard.html"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg> Admin Console</a>
+                <a href="../index.html"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Portal Home</a>
+                <a href="#" class="danger" data-action="logout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg> Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- 1. SENIOR HEALTH & SAFETY COMMAND HERO -->
+      <section class="card senior-hero" id="overviewSection" aria-labelledby="seniorHeroTitle">
+        <div class="senior-hero__left">
+          <div class="senior-hero__avatar">AS</div>
+          <div class="senior-hero__info">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <h2 id="seniorHeroTitle" style="margin:0; font-size:1.5rem; font-weight:700;">Anitha Suresh</h2>
+              <span class="senior-hero__relation">Mother</span>
+              <span class="status-pill status-pill--success" data-i18n="status_stable">
+                <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Vitals Stable
+              </span>
+              <span class="status-pill status-pill--safe">
+                <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Safe at Home
+              </span>
+            </div>
+            <p class="senior-hero__meta" style="margin-top:6px;">
+              <span>Patient ID: <strong>CP-9082</strong></span>
+              <span>&middot;</span>
+              <span>Age: 71</span>
+              <span>&middot;</span>
+              <span>Device: <strong>Online</strong> (Heartbeat 4m ago &middot; Battery 88%)</span>
+            </p>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="showToast('Refreshing senior device telemetry...')">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Refresh Vitals
+          </button>
+          <button class="btn btn-primary btn-sm" data-switch-tab="contacts">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call Family
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. SEGMENTED DASHBOARD TABS -->
+      <nav class="dashboard-tabs" id="familyDashboardTabs" aria-label="Dashboard views">
+        <button class="dashboard-tab-btn is-active" data-tab="overview">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>Overview &amp; Vitals</span>
+        </button>
+        <button class="dashboard-tab-btn" data-tab="medications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M5 12h14"/></svg>
+          <span>Medications &amp; Schedule</span>
+        </button>
+        <button class="dashboard-tab-btn" data-tab="contacts">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Care Network &amp; Calling</span>
+          <span class="dashboard-tab-badge" id="tabContactsBadge">4</span>
+        </button>
+        <button class="dashboard-tab-btn" data-tab="notifications">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span>Smart Notifications</span>
+          <span class="dashboard-tab-badge" id="tabNotifBadge">3</span>
+        </button>
+        <button class="dashboard-tab-btn" data-tab="settings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Family Account</span>
+        </button>
+      </nav>
+
+      <!-- ================= TAB PANE 1: OVERVIEW & VITALS ================= -->
+      <div class="tab-pane is-active" data-tab-pane="overview" id="overviewTab">
+        
+        <!-- Senior Wellbeing Vitals (6 Metrics) -->
+        <section id="vitalsSection" aria-labelledby="wellbeingHeading">
+          <div class="section-heading" style="margin-bottom:var(--space-3);">
+            <div>
+              <h2 id="wellbeingHeading" data-i18n="senior_wellbeing_title">Senior Wellbeing Vitals</h2>
+              <p class="header__subtitle">Continuous physiological readings &middot; Last synced 10m ago</p>
+            </div>
+            <span class="status-pill status-pill--success">All 6 Normal</span>
+          </div>
+
+          <div class="wellbeing-grid">
+            <!-- Blood Pressure -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="bp_label">Blood Pressure</span>
+                <div class="metric-card__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">120/80 <span class="metric-card__unit">mmHg</span></div>
+              <div class="metric-card__status" style="color:var(--color-primary-dark);">
+                <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Normal &middot; 8:00 AM
+              </div>
+            </div>
+
+            <!-- Blood Sugar -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="sugar_label">Blood Sugar</span>
+                <div class="metric-card__icon accent-icon-teal">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">112 <span class="metric-card__unit">mg/dL</span></div>
+              <div class="metric-card__status" style="color:var(--color-primary-dark);">
+                <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Normal Fasting
+              </div>
+            </div>
+
+            <!-- Heart Rate -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="hr_label">Heart Rate</span>
+                <div class="metric-card__icon accent-icon-purple">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">72 <span class="metric-card__unit">bpm</span></div>
+              <div class="metric-card__status" style="color:var(--color-primary-dark);">
+                <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Resting Rhythm
+              </div>
+            </div>
+
+            <!-- Oxygen SpO2 -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="spo2_label">Oxygen (SpO2)</span>
+                <div class="metric-card__icon accent-icon-blue">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">98% <span class="metric-card__unit">SpO2</span></div>
+              <div class="metric-card__status" style="color:var(--color-primary-dark);">
+                <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Optimal Oxygen
+              </div>
+            </div>
+
+            <!-- Temperature -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="temp_label">Temperature</span>
+                <div class="metric-card__icon accent-icon-amber">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">98.6 <span class="metric-card__unit">°F</span></div>
+              <div class="metric-card__status" style="color:var(--color-primary-dark);">
+                <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Normal Temp
+              </div>
+            </div>
+
+            <!-- Weight -->
+            <div class="metric-card">
+              <div class="metric-card__top">
+                <span class="metric-card__label" data-i18n="weight_label">Weight</span>
+                <div class="metric-card__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v20M18 2v20M6 12h12"/></svg>
+                </div>
+              </div>
+              <div class="metric-card__value">62.4 <span class="metric-card__unit">kg</span></div>
+              <div class="metric-card__status" style="color:var(--color-text-secondary);">
+                <span>&plusmn;0.2 kg vs last wk</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Today's Care Highlights (3 Key Cards) -->
+        <div class="overview-highlights">
+          <!-- Card 1: Medication Snapshot -->
+          <div class="highlight-card">
+            <div>
+              <div class="highlight-card__header">
+                <span class="badge" style="background:#DCFCE7; color:#166534; font-weight:700;">Medications</span>
+                <span class="status-pill status-pill--success">2 of 3 Taken</span>
+              </div>
+              <h3 style="margin:12px 0 4px; font-size:1.15rem; font-weight:700;">Today's Doses on Track</h3>
+              <p style="color:var(--color-text-secondary); font-size:0.9rem; line-height:1.4;">
+                Next dose: <strong>Atorvastatin 10mg</strong> scheduled at 8:00 PM with dinner.
+              </p>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width:100%; justify-content:center;" data-switch-tab="medications">
+              <span>View Full Schedule &rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Upcoming Doctor Visit Snapshot -->
+          <div class="highlight-card">
+            <div>
+              <div class="highlight-card__header">
+                <span class="badge" style="background:#DBEAFE; color:#1E40AF; font-weight:700;">Telehealth Visit</span>
+                <span class="status-pill status-pill--success">Confirmed</span>
+              </div>
+              <h3 style="margin:12px 0 4px; font-size:1.15rem; font-weight:700;">Dr. Joseph (Cardiology)</h3>
+              <p style="color:var(--color-text-secondary); font-size:0.9rem; line-height:1.4;">
+                Today at 3:00 PM &middot; Video consultation follow-up for blood pressure review.
+              </p>
+            </div>
+            <button class="btn btn-primary btn-sm" style="width:100%; justify-content:center;" data-action="view-appointment">
+              <span>Consultation Details &rarr;</span>
+            </button>
+          </div>
+
+          <!-- Card 3: Smart Safety & Alerts Snapshot -->
+          <div class="highlight-card">
+            <div>
+              <div class="highlight-card__header">
+                <span class="badge" style="background:#FEF3C7; color:#92400E; font-weight:700;">Smart Alerts</span>
+                <span class="badge-dot" style="position:static; display:inline-flex;">3 Unread</span>
+              </div>
+              <h3 style="margin:12px 0 4px; font-size:1.15rem; font-weight:700;">Home Safety Verified</h3>
+              <p style="color:var(--color-text-secondary); font-size:0.9rem; line-height:1.4;">
+                Wearable device heartbeat confirmed 4m ago. Battery at 88%. No fall or SOS events.
+              </p>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width:100%; justify-content:center;" data-switch-tab="notifications">
+              <span>Check Notifications &rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Emergency & Care Contacts Bar -->
+        <section style="margin-top:var(--space-5);">
+          <div class="section-heading" style="margin-bottom:var(--space-3);">
+            <div>
+              <h3 style="margin:0; font-size:1.15rem; font-weight:700;">Quick Emergency &amp; Family Calling</h3>
+              <p class="header__subtitle">Instant one-tap direct and voice call links</p>
+            </div>
+            <button class="btn btn-outline btn-sm" data-switch-tab="contacts" id="quickContactsCountBtn">
+              View All 4 Contacts &rarr;
+            </button>
+          </div>
+
+          <div class="quick-contacts-bar" id="quickContactsBar" aria-live="polite">
+            <!-- Quick Contact 1: Anu Suresh -->
+            <div class="quick-contact-pill">
+              <div class="quick-contact-pill__info">
+                <div class="contact-card__avatar" style="width:40px; height:40px; font-size:0.95rem;">AS</div>
+                <div>
+                  <h4 style="margin:0; font-size:0.98rem; font-weight:700;">Anu Suresh</h4>
+                  <p style="margin:0; font-size:0.8rem; color:var(--color-text-secondary);">Daughter &middot; Emergency</p>
+                </div>
+              </div>
+              <div class="quick-contact-pill__actions">
+                <a href="tel:+919847123456" class="btn btn-primary btn-sm btn-call" data-name="Anu Suresh" data-phone="+91 98471 23456" title="Call Anu">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Call</span>
+                </a>
+                <button class="btn btn-secondary btn-sm btn-voice-call" data-name="Anu Suresh" title="Voice Call Anu">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Contact 2: Rahul Suresh -->
+            <div class="quick-contact-pill">
+              <div class="quick-contact-pill__info">
+                <div class="contact-card__avatar" style="width:40px; height:40px; font-size:0.95rem;">RS</div>
+                <div>
+                  <h4 style="margin:0; font-size:0.98rem; font-weight:700;">Rahul Suresh</h4>
+                  <p style="margin:0; font-size:0.8rem; color:var(--color-text-secondary);">Son &middot; Family</p>
+                </div>
+              </div>
+              <div class="quick-contact-pill__actions">
+                <a href="tel:+919447234567" class="btn btn-primary btn-sm btn-call" data-name="Rahul Suresh" data-phone="+91 94472 34567" title="Call Rahul">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Call</span>
+                </a>
+                <button class="btn btn-secondary btn-sm btn-voice-call" data-name="Rahul Suresh" title="Voice Call Rahul">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Contact 3: Dr. Joseph -->
+            <div class="quick-contact-pill">
+              <div class="quick-contact-pill__info">
+                <div class="contact-card__avatar" style="width:40px; height:40px; font-size:0.95rem;">DJ</div>
+                <div>
+                  <h4 style="margin:0; font-size:0.98rem; font-weight:700;">Dr. Joseph</h4>
+                  <p style="margin:0; font-size:0.8rem; color:var(--color-text-secondary);">Physician &middot; Cardiology</p>
+                </div>
+              </div>
+              <div class="quick-contact-pill__actions">
+                <a href="tel:+919846011223" class="btn btn-primary btn-sm btn-call" data-name="Dr. Joseph" data-phone="+91 98460 11223" title="Call Doctor">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Call</span>
+                </a>
+                <button class="btn btn-secondary btn-sm btn-voice-call" data-name="Dr. Joseph" title="Voice Call Doctor">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Contact 4: Mary Varghese -->
+            <div class="quick-contact-pill">
+              <div class="quick-contact-pill__info">
+                <div class="contact-card__avatar" style="width:40px; height:40px; font-size:0.95rem;">MV</div>
+                <div>
+                  <h4 style="margin:0; font-size:0.98rem; font-weight:700;">Mary Varghese</h4>
+                  <p style="margin:0; font-size:0.8rem; color:var(--color-text-secondary);">Caregiver &middot; Home Assistance</p>
+                </div>
+              </div>
+              <div class="quick-contact-pill__actions">
+                <a href="tel:+919745566778" class="btn btn-primary btn-sm btn-call" data-name="Mary Varghese" data-phone="+91 97455 66778" title="Call Caregiver">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span>Call</span>
+                </a>
+                <button class="btn btn-secondary btn-sm btn-voice-call" data-name="Mary Varghese" title="Voice Call Caregiver">
+                  <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ================= TAB PANE 2: MEDICATIONS & SCHEDULE ================= -->
+      <div class="tab-pane" data-tab-pane="medications" id="medicationsTab">
+        
+        <div class="tab-grid-2col">
+          <!-- LEFT: Today's Medication Adherence & Schedule -->
+          <article class="card" id="medicationUpdatesSection">
+            <div class="section-heading">
+              <div>
+                <h2 data-i18n="nav_medication_updates">Medication Schedule</h2>
+                <p class="header__subtitle">Today's doses &middot; 2 of 3 taken (67% adherence)</p>
+              </div>
+              <span class="status-pill status-pill--success">95% Weekly Avg</span>
+            </div>
+
+            <div class="update-list">
+              <!-- Morning Dose -->
+              <div class="update-item">
+                <div class="update-item__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M5 12h14"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <p class="update-item__title">Morning Dose: Amlodipine 5mg</p>
+                  <p class="update-item__meta">Taken at 8:15 AM &middot; Verified by Care+ band</p>
+                </div>
+                <span class="status-pill status-pill--success" data-i18n="status_taken">Taken</span>
+              </div>
+
+              <!-- Afternoon Dose -->
+              <div class="update-item">
+                <div class="update-item__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M5 12h14"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <p class="update-item__title">Afternoon Dose: Metformin 500mg</p>
+                  <p class="update-item__meta">Taken at 1:30 PM &middot; Post-lunch confirmed</p>
+                </div>
+                <span class="status-pill status-pill--success" data-i18n="status_taken">Taken</span>
+              </div>
+
+              <!-- Evening Dose -->
+              <div class="update-item">
+                <div class="update-item__icon accent-icon-amber">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <p class="update-item__title">Evening Dose: Atorvastatin 10mg</p>
+                  <p class="update-item__meta">Due at 8:00 PM &middot; 1 tablet with dinner</p>
+                </div>
+                <span class="status-pill status-pill--warning" data-i18n="status_upcoming">Upcoming</span>
+              </div>
+            </div>
+
+            <!-- Adherence Summary Card Footer -->
+            <div style="margin-top:var(--space-4); padding:var(--space-3); border-radius:var(--radius-sm); background:var(--color-bg); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+              <span style="font-size:0.88rem; color:var(--color-text-secondary);">Last 7 Days Adherence Rate:</span>
+              <strong style="font-size:0.95rem; color:var(--color-primary-dark);">20 of 21 Doses (95.2%)</strong>
+            </div>
+          </article>
+
+          <!-- RIGHT: Upcoming Doctor Consultation & Supplies -->
+          <div style="display:flex; flex-direction:column; gap:var(--space-4);">
+            
+            <!-- Doctor Consultation -->
+            <article class="card" id="appointmentSection">
+              <div class="section-heading">
+                <div>
+                  <h2 data-i18n="nav_appointments">Next Consultation</h2>
+                  <p class="header__subtitle">Scheduled telemedicine appointment</p>
+                </div>
+                <span class="status-pill status-pill--success" data-i18n="status_scheduled">Confirmed</span>
+              </div>
+
+              <div class="care-card" style="padding:var(--space-2) 0 0;">
+                <div class="care-card__top">
+                  <div class="care-card__icon accent-icon-blue">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                  </div>
+                  <div>
+                    <p class="care-card__label">Video Consultation &middot; Today at 3:00 PM</p>
+                    <h3 class="care-card__title">Dr. Joseph (Cardiology)</h3>
+                    <p class="care-card__detail">Routine follow-up for Blood Pressure &amp; medication review</p>
+                  </div>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:var(--space-2); margin-top:var(--space-4);">
+                  <button class="btn btn-primary btn-block" id="viewAppointmentBtn" data-i18n="btn_view_appointment">
+                    View Appointment Details
+                  </button>
+                  <button class="btn btn-outline btn-block" onclick="showToast('Testing camera, microphone, and speakers... All devices OK!')">
+                    Test Camera &amp; Mic
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Medication Supply & Prescriptions -->
+            <div class="card" style="padding:var(--space-4);">
+              <h3 style="margin:0 0 10px; font-size:1.05rem; font-weight:700;">Prescription Supplies</h3>
+              <div style="display:flex; flex-direction:column; gap:10px; font-size:0.88rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Amlodipine 5mg</span>
+                  <span class="badge" style="background:#DCFCE7; color:#166534;">18 days left</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Metformin 500mg</span>
+                  <span class="badge" style="background:#DCFCE7; color:#166534;">24 days left</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Atorvastatin 10mg</span>
+                  <span class="badge" style="background:#FEF3C7; color:#92400E;">12 days left (Refill queued)</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= TAB PANE 3: CARE NETWORK & CALLING ================= -->
+      <div class="tab-pane" data-tab-pane="contacts" id="contactsTab">
+        
+        <article class="card" id="contactsSection">
+          <div class="section-heading">
+            <div>
+              <h2 data-i18n="nav_contacts">Care Network &amp; Emergency Contacts</h2>
+              <p class="header__subtitle">One-tap direct phone calls and hands-free voice calling for senior safety</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="status-pill status-pill--safe" id="activeRespondersBadge">4 Active Responders</span>
+              <button class="btn btn-outline btn-sm" data-action="open-add-contact" style="display:inline-flex; align-items:center; gap:4px;">
+                <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                <span data-i18n="btn_add_contact">+ Add Contact</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2x2 Grid of Elder-Friendly Contact Cards -->
+          <div class="contacts-grid" id="contactsGrid" style="margin-top:var(--space-4);" aria-live="polite">
+            
+            <!-- Contact 1: Anu Suresh -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-card__header">
+                  <div class="contact-card__avatar">AS</div>
+                  <div style="flex:1;">
+                    <h3 class="contact-card__name">Anu Suresh</h3>
+                    <p class="contact-card__meta">Daughter &middot; Primary Emergency Responder</p>
+                    <p class="contact-card__phone">+91 98471 23456</p>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-card__buttons">
+                <a href="tel:+919847123456" class="btn btn-primary btn-call" data-name="Anu Suresh" data-phone="+91 98471 23456">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span data-i18n="btn_call">Call</span>
+                </a>
+                <button class="btn btn-secondary btn-voice-call" data-name="Anu Suresh">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  <span data-i18n="btn_voice_call">Voice</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contact 2: Rahul Suresh -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-card__header">
+                  <div class="contact-card__avatar">RS</div>
+                  <div style="flex:1;">
+                    <h3 class="contact-card__name">Rahul Suresh</h3>
+                    <p class="contact-card__meta">Son &middot; Family Member</p>
+                    <p class="contact-card__phone">+91 94472 34567</p>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-card__buttons">
+                <a href="tel:+919447234567" class="btn btn-primary btn-call" data-name="Rahul Suresh" data-phone="+91 94472 34567">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span data-i18n="btn_call">Call</span>
+                </a>
+                <button class="btn btn-secondary btn-voice-call" data-name="Rahul Suresh">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  <span data-i18n="btn_voice_call">Voice</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contact 3: Dr. Joseph -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-card__header">
+                  <div class="contact-card__avatar">DJ</div>
+                  <div style="flex:1;">
+                    <h3 class="contact-card__name">Dr. Joseph</h3>
+                    <p class="contact-card__meta">Primary Physician &middot; Cardiology</p>
+                    <p class="contact-card__phone">+91 98460 11223</p>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-card__buttons">
+                <a href="tel:+919846011223" class="btn btn-primary btn-call" data-name="Dr. Joseph" data-phone="+91 98460 11223">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span data-i18n="btn_call">Call</span>
+                </a>
+                <button class="btn btn-secondary btn-voice-call" data-name="Dr. Joseph">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  <span data-i18n="btn_voice_call">Voice</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contact 4: Mary Varghese -->
+            <div class="contact-card">
+              <div>
+                <div class="contact-card__header">
+                  <div class="contact-card__avatar">MV</div>
+                  <div style="flex:1;">
+                    <h3 class="contact-card__name">Mary Varghese</h3>
+                    <p class="contact-card__meta">Caregiver &middot; Daily Home Assistance</p>
+                    <p class="contact-card__phone">+91 97455 66778</p>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-card__buttons">
+                <a href="tel:+919745566778" class="btn btn-primary btn-call" data-name="Mary Varghese" data-phone="+91 97455 66778">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <span data-i18n="btn_call">Call</span>
+                </a>
+                <button class="btn btn-secondary btn-voice-call" data-name="Mary Varghese">
+                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  <span data-i18n="btn_voice_call">Voice</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Emergency SOS Quick Broadcast Alert -->
+          <div class="emergency-banner" style="margin-top:var(--space-5);">
+            <div class="emergency-banner__content">
+              <div class="emergency-banner__icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <h3 class="emergency-banner__title">Emergency SOS Broadcast Ready</h3>
+                <p class="emergency-banner__subtitle">One tap alerts all 4 registered emergency contacts with real-time GPS location via SMS &amp; app.</p>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('🚨 Emergency SOS broadcast simulated. Alert sent to 4 emergency contacts.');">
+              Trigger Emergency Alert
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ================= TAB PANE 4: SMART NOTIFICATIONS ================= -->
+      <div class="tab-pane" data-tab-pane="notifications" id="notificationsTab">
+        
+        <article class="card" id="notificationsSection">
+          <div class="section-heading">
+            <div>
+              <h2 data-i18n="nav_notifications">Smart Notifications</h2>
+              <p class="header__subtitle">Categorized alerts with quick read and filter actions</p>
+            </div>
+            <button class="btn btn-outline btn-sm" id="markAllReadBtn">Mark all as read</button>
+          </div>
+
+          <!-- Filter tabs -->
+          <div class="notif-filter-bar" role="tablist">
+            <button class="notif-tab is-active" data-category="all">All (6)</button>
+            <button class="notif-tab" data-category="health">Health (1)</button>
+            <button class="notif-tab" data-category="medication">Medication (2)</button>
+            <button class="notif-tab" data-category="appointment">Appointment (1)</button>
+            <button class="notif-tab" data-category="emergency">Emergency (1)</button>
+            <button class="notif-tab" data-category="family">Family (1)</button>
+          </div>
+
+          <!-- List -->
+          <div class="smart-notif-list" id="smartNotifContainer" aria-live="polite">
+
+            <div class="smart-notif-item is-unread" data-category="medication">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M5 12h14"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-medication">Medication</span>
+                  <p class="notification-item__text"><strong>Morning medication taken</strong>: Anitha took Amlodipine 5mg on time.</p>
+                  <p class="notification-item__time">15 minutes ago</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="btn btn-outline btn-sm" data-action="mark-read">Mark Read</button>
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="smart-notif-item is-unread" data-category="appointment">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-blue">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-appointment">Appointment</span>
+                  <p class="notification-item__text"><strong>Consultation today at 3:00 PM</strong> with Dr. Joseph. Room opens 10m early.</p>
+                  <p class="notification-item__time">1 hour ago</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="btn btn-outline btn-sm" data-action="mark-read">Mark Read</button>
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="smart-notif-item is-unread" data-category="health">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-teal">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-health">Health</span>
+                  <p class="notification-item__text"><strong>Vitals stable</strong>: Morning blood pressure reading 120/80 mmHg logged.</p>
+                  <p class="notification-item__time">3 hours ago</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="btn btn-outline btn-sm" data-action="mark-read">Mark Read</button>
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="smart-notif-item" data-category="medication">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-amber">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-medication">Medication</span>
+                  <p class="notification-item__text"><strong>Upcoming dose reminder</strong>: Evening medication Atorvastatin due at 8:00 PM.</p>
+                  <p class="notification-item__time">5 hours ago</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="smart-notif-item" data-category="emergency">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-green">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-emergency">Emergency</span>
+                  <p class="notification-item__text"><strong>Routine safety check</strong>: Device heartbeat confirmed, battery at 88%.</p>
+                  <p class="notification-item__time">Yesterday</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="smart-notif-item" data-category="family">
+              <div class="smart-notif-item__body">
+                <div class="notification-item__icon accent-icon-purple">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <span class="smart-notif-item__category category-family">Family</span>
+                  <p class="notification-item__text"><strong>Contact verified</strong>: Anu Suresh confirmed mobile number for notifications.</p>
+                  <p class="notification-item__time">2 days ago</p>
+                </div>
+              </div>
+              <div class="smart-notif-item__actions">
+                <button class="icon-button" data-action="clear-notif" aria-label="Clear notification" style="width:34px; height:34px;">
+                  <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ================= TAB PANE 5: SETTINGS & ACCOUNT ================= -->
+      <div class="tab-pane" data-tab-pane="settings" id="settingsTab">
+        
+        <div class="tab-grid-2col">
+          <!-- Main Form Card -->
+          <article class="card" id="settingsSection">
+            <div class="section-heading">
+              <div>
+                <h2 data-i18n="nav_settings">Family Account Settings</h2>
+                <p class="header__subtitle">Manage account details, contact info &amp; alert triggers</p>
+              </div>
+              <span class="status-pill status-pill--success">Full Access</span>
+            </div>
+
+            <form id="familyAccountForm" style="margin-top:var(--space-3);">
+              <div class="form-group">
+                <label for="memberName">Member Name</label>
+                <input type="text" id="memberName" name="memberName" class="form-input" value="Priya Suresh" required />
+              </div>
+
+              <div class="form-group" style="margin-top:var(--space-3);">
+                <label for="memberPhone">Phone Number</label>
+                <input type="tel" id="memberPhone" name="memberPhone" class="form-input" value="+91 98470 55555" required />
+              </div>
+
+              <div class="form-group" style="margin-top:var(--space-3);">
+                <label for="memberEmail">Email Address</label>
+                <input type="email" id="memberEmail" name="memberEmail" class="form-input" value="priya.suresh@example.com" required />
+              </div>
+
+              <div class="form-group" style="margin-top:var(--space-3);">
+                <label for="memberRelation">Relationship to Senior</label>
+                <input type="text" id="memberRelation" name="memberRelation" class="form-input" value="Daughter" required />
+              </div>
+
+              <div style="margin-top:var(--space-4);">
+                <label style="font-size:0.92rem; font-weight:700; color:var(--color-text); margin-bottom:8px; display:block;">Smart Notification Triggers</label>
+                <div class="form-checkbox-group" style="gap:10px;">
+                  <label class="checkbox-label" style="font-size:0.9rem;">
+                    <input type="checkbox" checked />
+                    <span>Vital readings outside safe threshold (BP, Sugar, SpO2)</span>
+                  </label>
+                  <label class="checkbox-label" style="font-size:0.9rem;">
+                    <input type="checkbox" checked />
+                    <span>Medication reminders &amp; missed doses</span>
+                  </label>
+                  <label class="checkbox-label" style="font-size:0.9rem;">
+                    <input type="checkbox" checked />
+                    <span>Emergency SOS broadcast alerts &amp; fall detection</span>
+                  </label>
+                </div>
+              </div>
+
+              <div style="margin-top:var(--space-5);">
+                <button type="submit" class="btn btn-primary btn-block" data-i18n="btn_save">Save Preferences</button>
+              </div>
+            </form>
+          </article>
+
+          <!-- Senior Link & Guardian Status Card -->
+          <div style="display:flex; flex-direction:column; gap:var(--space-4);">
+            <div class="card" style="padding:var(--space-4);">
+              <h3 style="margin:0 0 12px; font-size:1.1rem; font-weight:700;">Connected Senior Profile</h3>
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                <div class="avatar" style="width:48px; height:48px; font-size:1.1rem;">AS</div>
+                <div>
+                  <h4 style="margin:0; font-size:1.05rem;">Anitha Suresh</h4>
+                  <p style="margin:2px 0 0; font-size:0.85rem; color:var(--color-text-secondary);">Age: 71 &middot; Patient ID: CP-9082</p>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px; font-size:0.88rem; border-top:1px solid var(--color-border); padding-top:12px;">
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--color-text-secondary);">Relationship:</span>
+                  <strong>Mother</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--color-text-secondary);">Access Level:</span>
+                  <span class="status-pill status-pill--success" style="padding:2px 8px; font-size:0.75rem;">Primary Guardian</span>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--color-text-secondary);">Emergency Calling:</span>
+                  <strong style="color:var(--color-primary-dark);">Enabled (Priority 1)</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:var(--space-4);">
+              <h3 style="margin:0 0 8px; font-size:1.05rem; font-weight:700;">Accessibility Quick Toggle</h3>
+              <p style="font-size:0.88rem; color:var(--color-text-secondary); margin-bottom:14px;">
+                Need elder-friendly fonts or high-contrast visuals?
+              </p>
+              <button class="btn btn-outline btn-block" data-action="open-a11y">
+                Open Accessibility Controls
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+
+<!-- ACCESSIBILITY MODAL -->
+<div class="modal-overlay" id="a11yModal" role="dialog" aria-modal="true" aria-labelledby="a11yTitle">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-green">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+    </div>
+    <h3 class="modal__title" id="a11yTitle">Care+ Accessibility Controls</h3>
+    <p class="modal__text">Adjust typography, button sizes, contrast, and navigation simplicity for comfortable elder-friendly usage. Preferences persist in your browser.</p>
+
+    <div class="a11y-controls-grid">
+      <!-- Text Sizing -->
+      <div class="a11y-control-card">
+        <h4>Text Scaling</h4>
+        <p>Current: <strong id="a11yTextSizeDisplay">Default (100%)</strong></p>
+        <div class="a11y-btn-group">
+          <button class="btn btn-outline btn-sm" id="a11yIncreaseFont">A+</button>
+          <button class="btn btn-outline btn-sm" id="a11yDecreaseFont">A-</button>
+          <button class="btn btn-outline btn-sm" id="a11yResetFont">Reset</button>
+        </div>
+      </div>
+
+      <!-- High Contrast -->
+      <div class="a11y-control-card">
+        <h4>High Contrast</h4>
+        <p>High readability colors &amp; bright borders</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yHighContrast" />
+          <span>Enable High Contrast</span>
+        </label>
+      </div>
+
+      <!-- Large Buttons -->
+      <div class="a11y-control-card">
+        <h4>Large Buttons</h4>
+        <p>Expanded click &amp; touch targets</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yLargeButtons" />
+          <span>Enable Large Buttons</span>
+        </label>
+      </div>
+
+      <!-- Reduced Motion -->
+      <div class="a11y-control-card">
+        <h4>Reduce Motion</h4>
+        <p>Minimizes UI transitions &amp; animations</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yReduceMotion" />
+          <span>Enable Reduced Motion</span>
+        </label>
+      </div>
+
+      <!-- Simple Navigation -->
+      <div class="a11y-control-card" style="grid-column:1 / -1;">
+        <h4>Simple Navigation Mode</h4>
+        <p>Hides secondary metadata and provides a prominent, simplified navigation layout for seniors</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11ySimpleNav" />
+          <span>Enable Simple Navigation</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <button class="btn btn-primary btn-block" onclick="CarePlusA11y.closeModal()">Close Accessibility</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOICE NAVIGATION MODAL -->
+<div class="modal-overlay" id="voiceModal" role="dialog" aria-modal="true" aria-labelledby="voiceTitle">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="voice-modal-content">
+      <div class="voice-mic-orb">
+        <svg class="icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </div>
+      <h3 class="modal__title" id="voiceTitle">Care+ Voice Assistant</h3>
+      <p class="modal__text" style="max-width:440px;">
+        Speak naturally to navigate, access vitals, open notifications, or call family members in English or Malayalam.
+      </p>
+
+      <div style="width:100%; text-align:left; margin-top:var(--space-2);">
+        <p style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:var(--color-text-secondary);">Sample Voice Commands:</p>
+        <div class="voice-command-chips">
+          <button class="voice-chip" data-command="Open health updates">"Open health updates"</button>
+          <button class="voice-chip" data-command="Show notifications">"Show notifications"</button>
+          <button class="voice-chip" data-command="Call my daughter">"Call my daughter"</button>
+          <button class="voice-chip" data-command="Open appointments">"Open appointments"</button>
+          <button class="voice-chip" data-command="Change language to Malayalam">"Change language to Malayalam"</button>
+        </div>
+      </div>
+
+      <div class="modal__actions" style="margin-top:var(--space-4); width:100%;">
+        <button class="btn btn-outline btn-block" onclick="CarePlusVoiceBridge.closeModal()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROLE SWITCHER MODAL -->
+<div class="modal-overlay" id="roleSwitcherModal" role="dialog" aria-modal="true" aria-labelledby="roleTitle">
+  <div class="modal" style="max-width:680px;">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-blue">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <h3 class="modal__title" id="roleTitle">Switch Care+ Role</h3>
+    <p class="modal__text">Select a dashboard to view the specialized interface for that role.</p>
+
+    <div class="role-grid">
+      <div class="role-card" data-role="senior">
+        <h4>Senior Citizen</h4>
+        <p>Patient vital tracking, daily care checklist, telehealth</p>
+      </div>
+
+      <div class="role-card" data-role="doctor">
+        <h4>Doctor</h4>
+        <p>Doctor consultation portal and clinical patient records</p>
+      </div>
+
+      <div class="role-card is-active" data-role="family">
+        <h4>Family Member</h4>
+        <p>Monitoring senior wellbeing, medication schedule &amp; contacts</p>
+      </div>
+
+      <div class="role-card" data-role="admin">
+        <h4>Administrator</h4>
+        <p>System oversight, user verifications &amp; emergency audit</p>
+      </div>
+    </div>
+
+    <div class="modal__actions" style="margin-top:var(--space-4);">
+      <button class="btn btn-outline btn-block" onclick="CarePlusAuth.closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- APPOINTMENT DETAIL MODAL -->
+<div class="modal-overlay" id="appointmentDetailModal" role="dialog" aria-modal="true" aria-labelledby="apptModalTitle">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-blue">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+    </div>
+    <h3 class="modal__title" id="apptModalTitle">Consultation with Dr. Joseph</h3>
+    <div style="text-align:left; margin:var(--space-4) 0; font-size:0.95rem; display:flex; flex-direction:column; gap:8px;">
+      <p><strong>Patient:</strong> Anitha Suresh (Mother)</p>
+      <p><strong>Doctor:</strong> Dr. Joseph (Cardiology)</p>
+      <p><strong>Date &amp; Time:</strong> Today at 3:00 PM (30 minutes)</p>
+      <p><strong>Type:</strong> Secure Video Consultation</p>
+      <p><strong>Purpose:</strong> Routine Blood Pressure &amp; Medication Follow-up</p>
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn-outline" data-action="close-modal">Close</button>
+      <button class="btn btn-primary" onclick="showToast('Connecting to Dr. Joseph\'s video consultation room...'); document.getElementById('appointmentDetailModal').classList.remove('is-open'); document.body.style.overflow='';">Join Video Consultation</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FORM MODAL (ADD / EDIT) -->
+<div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+  <div class="modal" style="max-width:520px; text-align:left;">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-blue" style="margin:0 auto var(--space-3);">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+    </div>
+    <h3 class="modal__title" id="contactModalTitle" style="text-align:center;">Add Care &amp; Emergency Contact</h3>
+    <p class="modal__text" style="text-align:center; margin-bottom:var(--space-4);">Add family, emergency responders, or physicians with one-tap dialing.</p>
+
+    <form id="contactForm">
+      <input type="hidden" id="contactId" name="contactId" value="" />
+      
+      <div style="display:flex; flex-direction:column; gap:var(--space-3);">
+        <div>
+          <label for="contactName" style="display:block; font-size:0.88rem; font-weight:600; margin-bottom:4px;">Full Name *</label>
+          <input type="text" id="contactName" name="contactName" class="form-input" placeholder="e.g. Dr. Anita Menon" required style="width:100%;" />
+        </div>
+
+        <div>
+          <label for="contactRelation" style="display:block; font-size:0.88rem; font-weight:600; margin-bottom:4px;">Relationship / Role *</label>
+          <input type="text" id="contactRelation" name="contactRelation" class="form-input" placeholder="e.g. Sister, Geriatric Specialist" required style="width:100%;" />
+        </div>
+
+        <div>
+          <label for="contactPhone" style="display:block; font-size:0.88rem; font-weight:600; margin-bottom:4px;">Phone Number *</label>
+          <input type="tel" id="contactPhone" name="contactPhone" class="form-input" placeholder="+91 98471 23456" required style="width:100%;" />
+          <small style="font-size:0.75rem; color:var(--color-text-secondary);">Include country code (e.g. +91 for India)</small>
+        </div>
+
+        <div>
+          <label for="contactType" style="display:block; font-size:0.88rem; font-weight:600; margin-bottom:4px;">Contact Category</label>
+          <select id="contactType" name="contactType" class="form-input" style="width:100%;">
+            <option value="family">Family Member</option>
+            <option value="doctor">Doctor / Physician</option>
+            <option value="caregiver">Caregiver / Nurse</option>
+            <option value="emergency">Emergency Services / Neighbor</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="checkbox-label" style="margin-top:4px;">
+            <input type="checkbox" id="contactPriority" name="contactPriority" />
+            <span>Mark as Primary Emergency Responder</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal__actions" style="margin-top:var(--space-4);">
+        <button type="button" class="btn btn-outline" data-action="close-modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="contactSubmitBtn">Save Contact</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="../js/script.js"></script>
+</body>
+</html>

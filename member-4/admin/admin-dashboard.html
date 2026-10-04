@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Care+ | Admin Dashboard</title>
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="app-shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__logo-mark" style="background-color:#6B21A8;">C+</div>
+      <div>
+        <span class="sidebar__brand-name">Care+</span>
+        <span class="role-badge role-badge--admin" style="margin-left:6px;">Admin</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Administrator navigation">
+      <a href="admin-dashboard.html" class="sidebar__link is-active" data-nav="dashboard">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="#usersSection" class="sidebar__link" data-nav="users">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span data-i18n="nav_users">Users</span>
+      </a>
+      <a href="#verificationsSection" class="sidebar__link" data-nav="verifications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span data-i18n="admin_verifications_title">Verifications</span>
+      </a>
+      <a href="#appointmentsSection" class="sidebar__link" data-nav="appointments">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+        <span data-i18n="nav_appointments">Appointments</span>
+      </a>
+      <a href="#emergenciesSection" class="sidebar__link" data-nav="emergencies">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span data-i18n="nav_emergency">Emergencies</span>
+      </a>
+      <a href="#analyticsSection" class="sidebar__link" data-nav="analytics">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span data-i18n="nav_reports">Reports &amp; Analytics</span>
+      </a>
+      <a href="#consentSection" class="sidebar__link" data-nav="consent">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span data-i18n="nav_consent">Consent &amp; Privacy</span>
+      </a>
+      <a href="#" class="sidebar__link" data-action="open-a11y">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        <span data-i18n="nav_accessibility">Accessibility</span>
+      </a>
+      <a href="#settingsSection" class="sidebar__link" data-nav="settings">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span data-i18n="nav_settings">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a href="#" class="sidebar__link sidebar__link--logout" data-action="logout">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span data-i18n="nav_logout">Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__greeting-block">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+          <div class="header__greeting">
+            <h1 data-i18n="greeting_admin">Care+ System Administration</h1>
+            <p class="header__subtitle">Operational governance, professional verification &amp; privacy compliance</p>
+          </div>
+        </div>
+
+        <div class="header__actions">
+          <div class="header-actions-group">
+            <!-- Language Selector -->
+            <select class="lang-selector header-select" aria-label="Select Language">
+              <option value="en">English</option>
+              <option value="ml">മലയാളം</option>
+            </select>
+
+            <!-- Accessibility Controls -->
+            <button class="header-pill-btn" data-action="open-a11y" aria-label="Accessibility Settings">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              <span data-i18n="a11y_btn">Accessibility</span>
+            </button>
+
+            <!-- Voice Navigation Integration Point -->
+            <button class="header-pill-btn header-pill-btn--voice" data-action="open-voice" aria-label="Voice Navigation">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              <span data-i18n="voice_nav_btn">🎙 Voice Nav</span>
+            </button>
+
+          </div>
+
+          <!-- Profile -->
+          <div class="dropdown">
+            <button class="profile-trigger" id="profileBtn" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar" style="background-color:#6B21A8;">AD</div>
+              <span class="profile-trigger__name">Administrator</span>
+            </button>
+            <div class="dropdown__panel" id="profilePanel" role="menu">
+              <p class="profile-panel__name">Administrator Console</p>
+              <p class="profile-panel__meta">Super Admin &middot; ID: AD-001</p>
+              <div class="profile-panel__list">
+                <a href="#usersSection"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Manage Users</a>
+                <a href="#" data-action="open-a11y"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> Accessibility</a>
+                <a href="../family/family-dashboard.html"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Family Portal</a>
+                <a href="../index.html"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Portal Home</a>
+                <a href="#" class="danger" data-action="logout"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg> Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- 1. ADMIN STATS OVERVIEW -->
+      <section id="overviewSection" aria-labelledby="adminOverviewHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="adminOverviewHeading" data-i18n="admin_overview_title">Platform Overview</h2>
+            <p class="header__subtitle">Real-time system telemetry and platform engagement statistics</p>
+          </div>
+        </div>
+
+        <div class="admin-stats-grid">
+          <!-- Total Users -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Total Users</span>
+              <div class="notification-item__icon accent-icon-green" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">1,248</div>
+            <span class="admin-stat-card__trend">▲ +14% this month</span>
+          </div>
+
+          <!-- Senior Citizens -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Senior Citizens</span>
+              <div class="notification-item__icon accent-icon-teal" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a8.5 8.5 0 0 1 13 0"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">412</div>
+            <span style="font-size:0.82rem; color:var(--color-text-secondary);">389 active today</span>
+          </div>
+
+          <!-- Doctors -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Doctors</span>
+              <div class="notification-item__icon accent-icon-blue" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">64</div>
+            <span class="status-pill status-pill--success" style="padding:2px 8px; font-size:0.75rem;">Verified</span>
+          </div>
+
+          <!-- Caregivers -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Caregivers</span>
+              <div class="notification-item__icon accent-icon-purple" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">128</div>
+            <span style="font-size:0.82rem; color:var(--color-text-secondary);">Active in field</span>
+          </div>
+
+          <!-- Volunteers -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Volunteers</span>
+              <div class="notification-item__icon accent-icon-amber" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">95</div>
+            <span style="font-size:0.82rem; color:var(--color-text-secondary);">Community aid</span>
+          </div>
+
+          <!-- Pending Verifications -->
+          <div class="admin-stat-card" style="border-left:4px solid var(--color-warning);">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Pending Verifications</span>
+              <div class="notification-item__icon accent-icon-amber" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value" style="color:var(--color-warning);">18</div>
+            <span style="font-size:0.82rem; color:var(--color-warning);">Action required</span>
+          </div>
+
+          <!-- Active Appointments -->
+          <div class="admin-stat-card">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Appointments Today</span>
+              <div class="notification-item__icon accent-icon-blue" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value">32</div>
+            <span style="font-size:0.82rem; color:var(--color-text-secondary);">Teleconsultations today</span>
+          </div>
+
+          <!-- Active Emergencies -->
+          <div class="admin-stat-card" style="border-left:4px solid var(--color-primary);">
+            <div class="admin-stat-card__header">
+              <span class="admin-stat-card__title">Active Emergencies</span>
+              <div class="notification-item__icon accent-icon-green" style="width:36px; height:36px;">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+            </div>
+            <div class="admin-stat-card__value" style="color:var(--color-primary-dark);">0 Active</div>
+            <span style="font-size:0.82rem; color:var(--color-primary-dark);">1 resolved earlier today</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. USER MANAGEMENT TABLE -->
+      <section class="card" id="usersSection" aria-labelledby="usersHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="usersHeading" data-i18n="admin_users_title">User Management</h2>
+            <p class="header__subtitle">Search, filter by role, inspect profiles, and toggle account activation</p>
+          </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="table-toolbar">
+          <div class="table-search">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="userSearchInput" placeholder="Search by user name, email, or contact..." />
+          </div>
+
+          <div class="table-filters">
+            <select class="form-select" id="userRoleFilter" aria-label="Filter by role" style="padding:8px 14px; font-size:0.9rem;">
+              <option value="all">All Roles</option>
+              <option value="senior">Senior Citizen</option>
+              <option value="doctor">Doctor</option>
+              <option value="caregiver">Caregiver</option>
+              <option value="volunteer">Volunteer</option>
+              <option value="family">Family Member</option>
+              <option value="admin">Administrator</option>
+            </select>
+
+            <select class="form-select" id="userStatusFilter" aria-label="Filter by status" style="padding:8px 14px; font-size:0.9rem;">
+              <option value="all">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="disabled">Disabled</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User Details</th>
+                <th>Role</th>
+                <th>Contact</th>
+                <th>Verification</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <!-- Row 1: Senior -->
+              <tr class="user-row" data-name="Thomas Abraham" data-email="thomas.abraham@example.com" data-role="senior" data-status="active">
+                <td>
+                  <div class="user-cell">
+                    <div class="avatar" style="width:36px; height:36px; font-size:0.9rem;">TA</div>
+                    <div>
+                      <div class="user-cell__name">Thomas Abraham</div>
+                      <div class="user-cell__email">thomas.abraham@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="role-badge">Senior</span></td>
+                <td>+91 98450 12345</td>
+                <td><span class="status-pill status-pill--success">Verified</span></td>
+                <td><span class="status-pill status-pill--success">Active</span></td>
+                <td>12 Jan 2026</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="view-user">View</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="toggle-user-status">Disable</button>
+                </td>
+              </tr>
+
+              <!-- Row 2: Doctor -->
+              <tr class="user-row" data-name="Dr. Joseph Cherian" data-email="dr.joseph@careplus.org" data-role="doctor" data-status="active">
+                <td>
+                  <div class="user-cell">
+                    <div class="avatar" style="width:36px; height:36px; font-size:0.9rem; background-color:#1D4ED8;">DJ</div>
+                    <div>
+                      <div class="user-cell__name">Dr. Joseph Cherian</div>
+                      <div class="user-cell__email">dr.joseph@careplus.org</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="role-badge" style="background-color:#EFF6FF; color:#1D4ED8;">Doctor</span></td>
+                <td>+91 98460 11223</td>
+                <td><span class="status-pill status-pill--success">Verified</span></td>
+                <td><span class="status-pill status-pill--success">Active</span></td>
+                <td>10 Jan 2026</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="view-user">View</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="toggle-user-status">Disable</button>
+                </td>
+              </tr>
+
+              <!-- Row 3: Family -->
+              <tr class="user-row" data-name="Priya Suresh" data-email="priya.suresh@example.com" data-role="family" data-status="active">
+                <td>
+                  <div class="user-cell">
+                    <div class="avatar" style="width:36px; height:36px; font-size:0.9rem; background-color:#5F9F68;">PS</div>
+                    <div>
+                      <div class="user-cell__name">Priya Suresh</div>
+                      <div class="user-cell__email">priya.suresh@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="role-badge role-badge--family">Family</span></td>
+                <td>+91 98470 55555</td>
+                <td><span class="status-pill status-pill--success">Consent Signed</span></td>
+                <td><span class="status-pill status-pill--success">Active</span></td>
+                <td>15 Jan 2026</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="view-user">View</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="toggle-user-status">Disable</button>
+                </td>
+              </tr>
+
+              <!-- Row 4: Caregiver -->
+              <tr class="user-row" data-name="Mary Varghese" data-email="mary.v@careplus.org" data-role="caregiver" data-status="active">
+                <td>
+                  <div class="user-cell">
+                    <div class="avatar" style="width:36px; height:36px; font-size:0.9rem; background-color:#B45309;">MV</div>
+                    <div>
+                      <div class="user-cell__name">Mary Varghese</div>
+                      <div class="user-cell__email">mary.v@careplus.org</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="role-badge" style="background-color:#FEF3C7; color:#B45309;">Caregiver</span></td>
+                <td>+91 97455 66778</td>
+                <td><span class="status-pill status-pill--success">Verified</span></td>
+                <td><span class="status-pill status-pill--success">Active</span></td>
+                <td>18 Jan 2026</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="view-user">View</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="toggle-user-status">Disable</button>
+                </td>
+              </tr>
+
+              <!-- Row 5: Volunteer -->
+              <tr class="user-row" data-name="Arun Kumar" data-email="arun.k@volunteer.org" data-role="volunteer" data-status="active">
+                <td>
+                  <div class="user-cell">
+                    <div class="avatar" style="width:36px; height:36px; font-size:0.9rem; background-color:#6B21A8;">AK</div>
+                    <div>
+                      <div class="user-cell__name">Arun Kumar</div>
+                      <div class="user-cell__email">arun.k@volunteer.org</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="role-badge" style="background-color:#F3E8FF; color:#6B21A8;">Volunteer</span></td>
+                <td>+91 96544 33221</td>
+                <td><span class="status-pill status-pill--warning">Pending</span></td>
+                <td><span class="status-pill status-pill--success">Active</span></td>
+                <td>28 Feb 2026</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="view-user">View</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="toggle-user-status">Disable</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 3. VERIFICATION SECTION (DOCTORS / CAREGIVERS / VOLUNTEERS) -->
+      <section class="card" id="verificationsSection" aria-labelledby="vHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="vHeading" data-i18n="admin_verifications_title">Professional Verifications</h2>
+            <p class="header__subtitle">Review credential submissions for healthcare providers and assistants</p>
+          </div>
+        </div>
+
+        <div class="verification-tabs" role="tablist">
+          <button class="v-tab-btn is-active" data-vtab="all">All Applications (3)</button>
+          <button class="v-tab-btn" data-vtab="doctor">Doctors (1)</button>
+          <button class="v-tab-btn" data-vtab="caregiver">Caregivers (1)</button>
+          <button class="v-tab-btn" data-vtab="volunteer">Volunteers (1)</button>
+        </div>
+
+        <div class="verification-list">
+
+          <!-- Verification Card 1: Doctor -->
+          <div class="verification-card" data-vtype="doctor" data-name="Dr. Radhika Nair">
+            <div class="verification-card__left">
+              <div class="avatar" style="background-color:#1D4ED8;">RN</div>
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:700;">Dr. Radhika Nair</h3>
+                <p style="font-size:0.9rem; color:var(--color-text-secondary);">
+                  Role: <strong>Doctor</strong> &middot; Specialty: Geriatric Medicine &middot; Reg: KMC-44910
+                </p>
+                <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-top:2px;">
+                  Submitted: 02 Sep 2026 &middot; Degree &amp; License verified via DigiLocker
+                </p>
+              </div>
+            </div>
+            <div class="verification-card__actions">
+              <span class="status-pill status-pill--warning">Pending</span>
+              <button class="btn btn-primary btn-sm" data-action="approve-verification" data-i18n="btn_approve">Approve</button>
+              <button class="btn btn-outline btn-sm danger" data-action="reject-verification" data-i18n="btn_reject">Reject</button>
+            </div>
+          </div>
+
+          <!-- Verification Card 2: Caregiver -->
+          <div class="verification-card" data-vtype="caregiver" data-name="Santhosh Paul">
+            <div class="verification-card__left">
+              <div class="avatar" style="background-color:#B45309;">SP</div>
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:700;">Santhosh Paul</h3>
+                <p style="font-size:0.9rem; color:var(--color-text-secondary);">
+                  Role: <strong>Caregiver</strong> &middot; Certified Home Health Aide (5 Yrs Experience)
+                </p>
+                <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-top:2px;">
+                  Submitted: 04 Sep 2026 &middot; Police clearance &amp; First Aid cert attached
+                </p>
+              </div>
+            </div>
+            <div class="verification-card__actions">
+              <span class="status-pill status-pill--warning">Pending</span>
+              <button class="btn btn-primary btn-sm" data-action="approve-verification" data-i18n="btn_approve">Approve</button>
+              <button class="btn btn-outline btn-sm danger" data-action="reject-verification" data-i18n="btn_reject">Reject</button>
+            </div>
+          </div>
+
+          <!-- Verification Card 3: Volunteer -->
+          <div class="verification-card" data-vtype="volunteer" data-name="Geetha Menon">
+            <div class="verification-card__left">
+              <div class="avatar" style="background-color:#6B21A8;">GM</div>
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:700;">Geetha Menon</h3>
+                <p style="font-size:0.9rem; color:var(--color-text-secondary);">
+                  Role: <strong>Volunteer</strong> &middot; Blood Donor (O+ve) &amp; Community Companion
+                </p>
+                <p style="font-size:0.85rem; color:var(--color-text-secondary); margin-top:2px;">
+                  Submitted: 05 Sep 2026 &middot; National Identity Card verified
+                </p>
+              </div>
+            </div>
+            <div class="verification-card__actions">
+              <span class="status-pill status-pill--warning">Pending</span>
+              <button class="btn btn-primary btn-sm" data-action="approve-verification" data-i18n="btn_approve">Approve</button>
+              <button class="btn btn-outline btn-sm danger" data-action="reject-verification" data-i18n="btn_reject">Reject</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. APPOINTMENT MANAGEMENT OVERVIEW -->
+      <section class="card" id="appointmentsSection" aria-labelledby="adminApptHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="adminApptHeading" data-i18n="admin_appointments_title">Appointment Management</h2>
+            <p class="header__subtitle">System-wide teleconsultation and clinic booking audit log</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date &amp; Time</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Thomas Abraham</strong> (CP-10245)</td>
+                <td>Dr. Joseph Cherian</td>
+                <td>Today, 3:00 PM</td>
+                <td><span class="status-pill status-pill--upcoming">Video Consult</span></td>
+                <td><span class="status-pill status-pill--success">Confirmed</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing appointment APPT-401 telemetry.')">Inspect</button></td>
+              </tr>
+              <tr>
+                <td><strong>Mary Thomas</strong> (CP-10492)</td>
+                <td>Dr. Joseph Cherian</td>
+                <td>Tomorrow, 10:30 AM</td>
+                <td><span class="status-pill status-pill--upcoming">Video Consult</span></td>
+                <td><span class="status-pill status-pill--success">Confirmed</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing appointment APPT-402 telemetry.')">Inspect</button></td>
+              </tr>
+              <tr>
+                <td><strong>John Mathew</strong> (CP-10331)</td>
+                <td>Dr. Radhika Nair</td>
+                <td>15 Sep, 11:00 AM</td>
+                <td><span class="status-pill status-pill--upcoming">In-Clinic</span></td>
+                <td><span class="status-pill status-pill--warning">Pending Confirmation</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing appointment APPT-403 telemetry.')">Inspect</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. EMERGENCY MANAGEMENT -->
+      <section class="card" id="emergenciesSection" aria-labelledby="adminEmergHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="adminEmergHeading" data-i18n="admin_emergency_title">Emergency Oversight</h2>
+            <p class="header__subtitle">Real-time incident dispatch monitoring and emergency responder coordination</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Emergency ID</th>
+                <th>Senior Citizen</th>
+                <th>Time Logged</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned Responder</th>
+                <th>Location Tracking</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>SOS-1092</code></td>
+                <td><strong>K. R. Varma</strong> (Age 74)</td>
+                <td>Today, 09:14 AM</td>
+                <td><span class="status-pill status-pill--danger">High</span></td>
+                <td><span class="status-pill status-pill--success">Resolved</span></td>
+                <td>Caregiver Mary V. + Family</td>
+                <td>Home Geofence &middot; Normal</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" onclick="showToast('Dispatch Log SOS-1092: Response time was 4 mins. Vitals normalized.')">View Log</button>
+                </td>
+              </tr>
+              <tr>
+                <td><code>SOS-1088</code></td>
+                <td><strong>Susan Thomas</strong> (Age 69)</td>
+                <td>Yesterday, 04:32 PM</td>
+                <td><span class="status-pill status-pill--warning">Medium</span></td>
+                <td><span class="status-pill status-pill--success">Resolved</span></td>
+                <td>Volunteer Arun K.</td>
+                <td>Medical Transit &middot; Complete</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" onclick="showToast('Dispatch Log SOS-1088: Prescription medicine delivery assistance completed.')">View Log</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. REPORTS & ANALYTICS -->
+      <section class="card" id="analyticsSection" aria-labelledby="analyticsHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="analyticsHeading" data-i18n="admin_analytics_title">Reports &amp; Analytics</h2>
+            <p class="header__subtitle">Platform utilization trends, service velocity &amp; registration patterns</p>
+          </div>
+        </div>
+
+        <div class="analytics-grid">
+
+          <!-- User Registrations Bar Chart -->
+          <div class="chart-card">
+            <h3 style="font-size:1.1rem; font-weight:700;">Monthly User Registrations</h3>
+            <div class="bar-chart-container" aria-label="Monthly registration bar chart">
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:45%;" data-value="120"></div>
+                <span class="bar-col__label">Apr</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:60%;" data-value="165"></div>
+                <span class="bar-col__label">May</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:72%;" data-value="198"></div>
+                <span class="bar-col__label">Jun</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:85%;" data-value="240"></div>
+                <span class="bar-col__label">Jul</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:92%;" data-value="260"></div>
+                <span class="bar-col__label">Aug</span>
+              </div>
+              <div class="bar-col">
+                <div class="bar-col__bar" style="height:98%;" data-value="285"></div>
+                <span class="bar-col__label">Sep</span>
+              </div>
+            </div>
+            <p style="font-size:0.85rem; color:var(--color-text-secondary); text-align:center;">Steady +18% compound quarterly platform growth</p>
+          </div>
+
+          <!-- Active Users by Role Distribution -->
+          <div class="chart-card">
+            <h3 style="font-size:1.1rem; font-weight:700;">Active Platform Stakeholders</h3>
+            <div class="progress-list">
+              <div class="progress-item">
+                <div class="progress-item__header">
+                  <span>Senior Citizens</span>
+                  <span>412 (33%)</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width:33%;"></div>
+                </div>
+              </div>
+
+              <div class="progress-item">
+                <div class="progress-item__header">
+                  <span>Family Members</span>
+                  <span>549 (44%)</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill progress-fill--blue" style="width:44%;"></div>
+                </div>
+              </div>
+
+              <div class="progress-item">
+                <div class="progress-item__header">
+                  <span>Caregivers</span>
+                  <span>128 (10%)</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill progress-fill--amber" style="width:10%;"></div>
+                </div>
+              </div>
+
+              <div class="progress-item">
+                <div class="progress-item__header">
+                  <span>Volunteers &amp; Doctors</span>
+                  <span>159 (13%)</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill progress-fill--purple" style="width:13%;"></div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:0.85rem; color:var(--color-text-secondary);">Highest engagement observed among family monitoring accounts</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 7. CONSENT & DATA PRIVACY -->
+      <section class="card" id="consentSection" aria-labelledby="consentHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="consentHeading" data-i18n="admin_consent_title">Patient Consent &amp; Data Privacy</h2>
+            <p class="header__subtitle">Family member monitoring authorization, access levels &amp; revocation controls</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Senior Citizen</th>
+                <th>Family Member</th>
+                <th>Consent Status</th>
+                <th>Access Level</th>
+                <th>Consent Date</th>
+                <th>Data Sharing Scope</th>
+                <th style="text-align:right;">Access Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Anitha Suresh</strong> (CP-9082)</td>
+                <td>Priya Suresh (Daughter)</td>
+                <td><span class="status-pill status-pill--success consent-status">Granted</span></td>
+                <td><span class="consent-level">Full Access</span></td>
+                <td>01 Jan 2026</td>
+                <td>Vitals, Medications, Appointments, Emergency</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="update-consent-access">Update Access</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="revoke-consent-access">Revoke Access</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Thomas Abraham</strong> (CP-10245)</td>
+                <td>Anu Thomas (Daughter)</td>
+                <td><span class="status-pill status-pill--success consent-status">Granted</span></td>
+                <td><span class="consent-level">Summary Only</span></td>
+                <td>12 Jan 2026</td>
+                <td>Medication adherence &amp; Emergency only</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" data-action="update-consent-access">Update Access</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="revoke-consent-access">Revoke Access</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Mary Mathew</strong> (CP-10882)</td>
+                <td>George Mathew (Son)</td>
+                <td><span class="status-pill status-pill--warning consent-status">Pending OTP</span></td>
+                <td><span class="consent-level">Full Access</span></td>
+                <td>03 Sep 2026</td>
+                <td>Awaiting Senior's SMS OTP Confirmation</td>
+                <td style="text-align:right;">
+                  <button class="btn btn-outline btn-sm" onclick="showToast('Resending OTP consent request to Mary Mathew.')">Resend OTP</button>
+                  <button class="btn btn-outline btn-sm danger" data-action="revoke-consent-access">Cancel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:var(--space-4); padding:var(--space-3); background-color:var(--color-bg); border-radius:var(--radius-sm); font-size:0.85rem; color:var(--color-text-secondary); border-left:3px solid var(--color-primary);">
+          <p style="margin:0 0 4px;"><strong>Governance Note:</strong> Patient consent records and family data access permissions are maintained in compliance with digital healthcare privacy guidelines.</p>
+          <p style="margin:0; font-style:italic;"><strong>Notice:</strong> This is a frontend demonstration. Production deployment requires secure backend authorization, encrypted storage, and appropriate healthcare data protection.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ================= MODALS ================= -->
+
+<!-- ACCESSIBILITY MODAL -->
+<div class="modal-overlay" id="a11yModal" role="dialog" aria-modal="true" aria-labelledby="adminA11yTitle">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-green">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+    </div>
+    <h3 class="modal__title" id="adminA11yTitle">Care+ Accessibility Controls</h3>
+    <p class="modal__text">Adjust typography, button sizes, contrast, and navigation simplicity across the admin console. Saved locally in your browser.</p>
+
+    <div class="a11y-controls-grid">
+      <div class="a11y-control-card">
+        <h4>Text Scaling</h4>
+        <p>Current: <strong id="a11yTextSizeDisplay">Default (100%)</strong></p>
+        <div class="a11y-btn-group">
+          <button class="btn btn-outline btn-sm" id="a11yIncreaseFont">A+</button>
+          <button class="btn btn-outline btn-sm" id="a11yDecreaseFont">A-</button>
+          <button class="btn btn-outline btn-sm" id="a11yResetFont">Reset</button>
+        </div>
+      </div>
+
+      <div class="a11y-control-card">
+        <h4>High Contrast</h4>
+        <p>High readability colors &amp; bright borders</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yHighContrast" />
+          <span>Enable High Contrast</span>
+        </label>
+      </div>
+
+      <div class="a11y-control-card">
+        <h4>Large Buttons</h4>
+        <p>Expanded click &amp; touch targets</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yLargeButtons" />
+          <span>Enable Large Buttons</span>
+        </label>
+      </div>
+
+      <div class="a11y-control-card">
+        <h4>Reduce Motion</h4>
+        <p>Minimizes UI transitions &amp; animations</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11yReduceMotion" />
+          <span>Enable Reduced Motion</span>
+        </label>
+      </div>
+
+      <div class="a11y-control-card" style="grid-column:1 / -1;">
+        <h4>Simple Navigation Mode</h4>
+        <p>Unclutters secondary information for simplified administration</p>
+        <label class="checkbox-label" style="margin-top:6px;">
+          <input type="checkbox" id="a11ySimpleNav" />
+          <span>Enable Simple Navigation</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <button class="btn btn-primary btn-block" onclick="CarePlusA11y.closeModal()">Close Accessibility</button>
+    </div>
+  </div>
+</div>
+
+  <!-- VOICE NAVIGATION MODAL -->
+<div class="modal-overlay" id="voiceModal" role="dialog" aria-modal="true" aria-labelledby="adminVoiceTitle">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="voice-modal-content">
+      <div class="voice-mic-orb">
+        <svg class="icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </div>
+      <h3 class="modal__title" id="adminVoiceTitle">Care+ Voice Assistant</h3>
+      <p class="modal__text" style="max-width:440px;">
+        Speak naturally to navigate across users, review appointments, inspect emergency reports, or switch languages.
+      </p>
+
+      <div style="width:100%; text-align:left; margin-top:var(--space-2);">
+        <p style="font-size:0.85rem; font-weight:700; text-transform:uppercase; color:var(--color-text-secondary);">Sample Voice Commands:</p>
+        <div class="voice-command-chips">
+          <button class="voice-chip" data-command="Open health updates">"Open health updates"</button>
+          <button class="voice-chip" data-command="Show notifications">"Show notifications"</button>
+          <button class="voice-chip" data-command="Open appointments">"Open appointments"</button>
+          <button class="voice-chip" data-command="Change language to Malayalam">"Change language to Malayalam"</button>
+          <button class="voice-chip" data-command="Change language to English">"Change language to English"</button>
+        </div>
+      </div>
+
+      <div class="modal__actions" style="margin-top:var(--space-4); width:100%;">
+        <button class="btn btn-outline btn-block" onclick="CarePlusVoiceBridge.closeModal()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROLE SWITCHER MODAL -->
+<div class="modal-overlay" id="roleSwitcherModal" role="dialog" aria-modal="true" aria-labelledby="adminRoleTitle">
+  <div class="modal" style="max-width:680px;">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-blue">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <h3 class="modal__title" id="adminRoleTitle">Switch Care+ Role</h3>
+    <p class="modal__text">Select a dashboard to view the specialized interface for that role.</p>
+
+    <div class="role-grid">
+      <div class="role-card" data-role="senior">
+        <h4>Senior Citizen</h4>
+        <p>Patient vital tracking, daily care, telemedicine</p>
+      </div>
+
+      <div class="role-card" data-role="doctor">
+        <h4>Doctor</h4>
+        <p>Doctor consultation portal and clinical records</p>
+      </div>
+
+      <div class="role-card" data-role="family">
+        <h4>Family Member</h4>
+        <p>Monitoring senior wellbeing, medication &amp; contacts</p>
+      </div>
+
+      <div class="role-card is-active" data-role="admin">
+        <h4>Administrator</h4>
+        <p>System oversight, user verifications &amp; emergency</p>
+      </div>
+    </div>
+
+    <div class="modal__actions" style="margin-top:var(--space-4);">
+      <button class="btn btn-outline btn-block" onclick="CarePlusAuth.closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN USER DETAIL MODAL -->
+<div class="modal-overlay" id="adminUserModal" role="dialog" aria-modal="true" aria-labelledby="adminUserModalName">
+  <div class="modal">
+    <button class="modal__close-btn" data-action="close-modal" aria-label="Close modal">&times;</button>
+    <div class="modal__icon accent-icon-purple">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </div>
+    <h3 class="modal__title" id="adminUserModalName">User Profile</h3>
+    <div style="text-align:left; margin:var(--space-4) 0; font-size:0.95rem; display:flex; flex-direction:column; gap:8px;">
+      <p><strong>Account Status:</strong> <span class="status-pill status-pill--success">Active &amp; Verified</span></p>
+      <p><strong>Two-Factor Auth:</strong> Enabled (SMS OTP)</p>
+      <p><strong>Last Login:</strong> Today at 08:30 AM</p>
+      <p><strong>Audit Log:</strong> 14 events logged in the past 30 days.</p>
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn-primary btn-block" data-action="close-modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="../js/script.js"></script>
+</body>
+</html>
