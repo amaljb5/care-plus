@@ -317,195 +317,352 @@ function showToast(message) {
 }
 
 /* ==========================================================================
-   MULTILINGUAL SYSTEM (ENGLISH + MALAYALAM)
+   MULTILINGUAL SYSTEM (COMPREHENSIVE FULL-PAGE MALAYALAM TRANSLATION ENGINE)
    ========================================================================== */
 var CarePlusI18n = {
   currentLang: 'en',
-  dictionary: {
-    en: {
-      nav_dashboard: 'Dashboard',
-      nav_senior_overview: 'Senior Overview',
-      nav_health_updates: 'Health & Vitals',
-      nav_medication_updates: 'Medications & Schedule',
-      nav_appointments: 'Appointments',
-      nav_emergency: 'Emergency',
-      nav_emergency_notifications: 'Emergency Notifications',
-      nav_contacts: 'Care Network & Contacts',
-      nav_notifications: 'Smart Notifications',
-      nav_accessibility: 'Accessibility',
-      nav_settings: 'Family Account Settings',
-      nav_logout: 'Logout',
-      nav_users: 'User Management',
-      nav_doctors: 'Doctors',
-      nav_caregivers: 'Caregivers',
-      nav_volunteers: 'Volunteers',
-      nav_reports: 'Reports & Analytics',
-      nav_consent: 'Patient Consent & Privacy',
-      btn_call: 'Call',
-      btn_voice_call: 'Voice Call',
-      btn_save: 'Save Preferences',
-      btn_cancel: 'Cancel',
-      btn_approve: 'Approve',
-      btn_reject: 'Reject',
-      btn_view: 'View',
-      btn_view_appointment: 'View Appointment Details',
-      btn_join_consultation: 'Join Consultation',
-      btn_switch_role: 'Switch Role',
-      btn_add_contact: '+ Add Contact',
-      btn_edit: 'Edit',
-      btn_delete: 'Delete',
-      btn_activate: 'Activate',
-      btn_disable: 'Disable',
-      btn_mark_read: 'Mark Read',
-      btn_mark_all_read: 'Mark all as read',
-      btn_clear: 'Clear',
-      status_stable: 'Vitals Stable',
-      status_safe: 'Safe at Home',
-      status_active: 'Active',
-      status_disabled: 'Disabled',
-      status_pending: 'Pending',
-      status_approved: 'Approved',
-      status_rejected: 'Rejected',
-      status_resolved: 'Resolved',
-      status_taken: 'Taken',
-      status_upcoming: 'Upcoming',
-      status_scheduled: 'Scheduled',
-      voice_nav_btn: '🎙 Voice Nav',
-      a11y_btn: 'Accessibility',
-      senior_wellbeing_title: 'Senior Wellbeing Vitals',
-      bp_label: 'Blood Pressure',
-      sugar_label: 'Blood Sugar',
-      hr_label: 'Heart Rate',
-      spo2_label: 'Oxygen (SpO2)',
-      temp_label: 'Temperature',
-      weight_label: 'Weight',
-      no_active_emergency: 'No active emergency',
-      emergency_all_clear: 'All systems normal. Senior is in safe zone.',
-      admin_overview_title: 'Platform Overview',
-      admin_users_title: 'User Management',
-      admin_verifications_title: 'Professional Verifications',
-      admin_appointments_title: 'Appointment Management',
-      admin_emergency_title: 'Emergency Oversight',
-      admin_analytics_title: 'Reports & Analytics',
-      admin_consent_title: 'Patient Consent & Data Privacy',
-      search_placeholder: 'Search by name or email...',
-      filter_role: 'All Roles',
-      filter_status: 'All Statuses'
-    },
-    ml: {
-      nav_dashboard: 'ഡാഷ്‌ബോർഡ്',
-      nav_senior_overview: 'മുതിർന്നവരുടെ അവലോകനം',
-      nav_health_updates: 'ആരോഗ്യ വിവരങ്ങൾ',
-      nav_medication_updates: 'മരുന്ന് ഷെഡ്യൂൾ',
-      nav_appointments: 'അപ്പോയിന്റ്മെന്റുകൾ',
-      nav_emergency: 'അടിയന്തര സാഹചര്യം',
-      nav_emergency_notifications: 'അടിയന്തര അറിയിപ്പുകൾ',
-      nav_contacts: 'കുടുംബ കോൺടാക്റ്റുകൾ',
-      nav_notifications: 'അറിയിപ്പുകൾ',
-      nav_accessibility: 'പ്രവേശനക്ഷമത',
-      nav_settings: 'അക്കൗണ്ട് ക്രമീകരണങ്ങൾ',
-      nav_logout: 'ലോഗ് ഔട്ട്',
-      nav_users: 'ഉപയോക്തൃ മാനേജ്മെന്റ്',
-      nav_doctors: 'ഡോക്ടർമാർ',
-      nav_caregivers: 'പരിപാലകർ',
-      nav_volunteers: 'വോളണ്ടിയർമാർ',
-      nav_reports: 'റിപ്പോർട്ടുകളും വിശകലനവും',
-      nav_consent: 'സമ്മതവും സ്വകാര്യതയും',
-      btn_call: 'വിളിക്കുക',
-      btn_voice_call: 'വോയ്സ് കോൾ',
-      btn_save: 'സേവ് ചെയ്യുക',
-      btn_cancel: 'റദ്ദാക്കുക',
-      btn_approve: 'അംഗീകരിക്കുക',
-      btn_reject: 'നിരസിക്കുക',
-      btn_view: 'കാണുക',
-      btn_view_appointment: 'അപ്പോയിന്റ്മെന്റ് കാണുക',
-      btn_join_consultation: 'കൺസൾട്ടേഷനിൽ ചേരുക',
-      btn_switch_role: 'റോൾ മാറ്റുക',
-      btn_add_contact: '+ കോൺടാക്റ്റ് ചേർക്കുക',
-      btn_edit: 'മാറ്റുക',
-      btn_delete: 'നീക്കം ചെയ്യുക',
-      btn_activate: 'സജീവമാക്കുക',
-      btn_disable: 'പ്രവർത്തനരഹിതമാക്കുക',
-      btn_mark_read: 'വായിച്ചതായി അടയാളപ്പെടുത്തുക',
-      btn_mark_all_read: 'എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുക',
-      btn_clear: 'മായ്ക്കുക',
-      status_stable: 'സുസ്ഥിരം',
-      status_safe: 'സുരക്ഷിതം',
-      status_active: 'സജീവം',
-      status_disabled: 'പ്രവർത്തനരഹിതം',
-      status_pending: 'തീർപ്പാക്കാത്തത്',
-      status_approved: 'അംഗീകരിച്ചു',
-      status_rejected: 'നിരസിച്ചു',
-      status_resolved: 'പരിഹരിച്ചു',
-      status_taken: 'കഴിച്ചു',
-      status_upcoming: 'വരാനിരിക്കുന്നത്',
-      status_scheduled: 'ഷെഡ്യൂൾ ചെയ്തത്',
-      voice_nav_btn: 'വോയ്‌സ് നാവിഗേഷൻ',
-      a11y_btn: 'പ്രവേശനക്ഷമത',
-      senior_wellbeing_title: 'ആരോഗ്യ വിവരങ്ങൾ',
-      bp_label: 'രക്തസമ്മർദ്ദം',
-      sugar_label: 'രക്തത്തിലെ പഞ്ചസാര',
-      hr_label: 'ഹൃദയമിടിപ്പ്',
-      spo2_label: 'ഓക്സിജൻ നില',
-      temp_label: 'ശരീര താപനില',
-      weight_label: 'ശരീരഭാരം',
-      no_active_emergency: 'അടിയന്തര സാഹചര്യങ്ങളൊന്നുമില്ല',
-      emergency_all_clear: 'എല്ലാം സാധാരണ നിലയിലാണ്. മുതിർന്ന വ്യക്തി സുരക്ഷിതനാണ്.',
-      admin_overview_title: 'പ്ലാറ്റ്ഫോം അവലോകനം',
-      admin_users_title: 'ഉപയോക്തൃ മാനേജ്മെന്റ്',
-      admin_verifications_title: 'പ്രൊഫഷണൽ സ്ഥിരീകരണം',
-      admin_appointments_title: 'അപ്പോയിന്റ്മെന്റ് മാനേജ്മെന്റ്',
-      admin_emergency_title: 'അടിയന്തര മേൽനോട്ടം',
-      admin_analytics_title: 'റിപ്പോർട്ടുകളും വിശകലനവും',
-      admin_consent_title: 'രോഗിയുടെ സമ്മതവും സ്വകാര്യതയും',
-      search_placeholder: 'പേര് അല്ലെങ്കിൽ ഇമെയിൽ തിരയുക...',
-      filter_role: 'എല്ലാ റോളുകളും',
-      filter_status: 'എല്ലാ സ്റ്റാറ്റസും'
-    }
-  },
+  textMap: {
+  "Care+": "കെയർ+",
+  "Welcome to Care+": "കെയർ+ ലേക്ക് സ്വാഗതം",
+  "Platform Portals": "പ്ലാറ്റ്ഫോം പോർട്ടലുകൾ",
+  "Family Portal": "കുടുംബ പോർട്ടൽ",
+  "Family Dashboard": "കുടുംബ ഡാഷ്‌ബോർഡ്",
+  "Admin Console": "അഡ്മിൻ കൺസോൾ",
+  "Admin Dashboard": "അഡ്മിൻ ഡാഷ്‌ബോർഡ്",
+  "Doctor Dashboard": "ഡോക്ടർ ഡാഷ്‌ബോർഡ്",
+  "Patient Dashboard": "രോഗി ഡാഷ്‌ബോർഡ്",
+  "Senior Citizen": "മുതിർന്ന പൗരൻ",
+  "Doctor": "ഡോക്ടർ",
+  "Family Member": "കുടുംബാംഗം",
+  "Administrator": "അഡ്മിനിസ്ട്രേറ്റർ",
+  "Caregiver": "പരിപാലകൻ",
+  "Volunteer": "വോളണ്ടിയർ",
+  "Dashboard": "ഡാഷ്‌ബോർഡ്",
+  "Overview & Vitals": "അവലോകനവും ആരോഗ്യനിലയും",
+  "Health & Vitals": "ആരോഗ്യ വിവരങ്ങൾ",
+  "My Patients": "എന്റെ രോഗികൾ",
+  "Medications": "മരുന്നുകൾ",
+  "Medications & Schedule": "മരുന്ന് ഷെഡ്യൂൾ",
+  "My Medicines": "എന്റെ മരുന്നുകൾ",
+  "Appointments": "അപ്പോയിന്റ്മെന്റുകൾ",
+  "Consultations": "കൺസൾട്ടേഷനുകൾ",
+  "Consult a Doctor": "ഡോക്ടറെ കാണുക",
+  "Medical Records": "മെഡിക്കൽ രേഖകൾ",
+  "Prescriptions": "പ്രിസ്ക്രിപ്ഷനുകൾ",
+  "Care Network & Contacts": "കെയർ നെറ്റ്‌വർക്കും കോൺടാക്റ്റുകളും",
+  "Care Network & Calling": "കെയർ നെറ്റ്‌വർക്കും വിളികളും",
+  "Family Contacts": "കുടുംബ കോൺടാക്റ്റുകൾ",
+  "Family Account": "കുടുംബ അക്കൗണ്ട്",
+  "Family Account Settings": "കുടുംബ അക്കൗണ്ട് ക്രമീകരണങ്ങൾ",
+  "Smart Notifications": "സ്മാർട്ട് അറിയിപ്പുകൾ",
+  "Notifications": "അറിയിപ്പുകൾ",
+  "Accessibility": "പ്രവേശനക്ഷമത",
+  "Accessibility Settings": "പ്രവേശനക്ഷമതാ ക്രമീകരണങ്ങൾ",
+  "Accessibility Controls": "പ്രവേശനക്ഷമതാ ക്രമീകരണങ്ങൾ",
+  "Settings": "ക്രമീകരണങ്ങൾ",
+  "Logout": "ലോഗ് ഔട്ട്",
+  "Users": "ഉപയോക്താക്കൾ",
+  "User Management": "ഉപയോക്തൃ മാനേജ്മെന്റ്",
+  "Verifications": "സ്ഥിരീകരണങ്ങൾ",
+  "Professional Verifications": "പ്രൊഫഷണൽ സ്ഥിരീകരണങ്ങൾ",
+  "Emergencies": "അടിയന്തര സാഹചര്യങ്ങൾ",
+  "Emergency Oversight": "അടിയന്തര മേൽനോട്ടം",
+  "Reports & Analytics": "റിപ്പോർട്ടുകളും വിശകലനവും",
+  "Consent & Privacy": "സമ്മതവും സ്വകാര്യതയും",
+  "Patient Consent & Data Privacy": "രോഗിയുടെ സമ്മതവും സ്വകാര്യതയും",
+  "Voice Navigation": "വോയ്‌സ് നാവിഗേഷൻ",
+  "Voice Navigation Assistant": "വോയ്‌സ് നാവിഗേഷൻ അസിസ്റ്റന്റ്",
+  "Voice Assistant": "വോയ്‌സ് അസിസ്റ്റന്റ്",
+  "🎙 Voice Nav": "🎙 വോയ്‌സ് നാവിഗേഷൻ",
+  "Good Morning, Priya": "സുപ്രഭാതം, പ്രിയ",
+  "Good Morning, Dr. Joseph": "സുപ്രഭാതം, ഡോ. ജോസഫ്",
+  "Good Morning, Thomas": "സുപ്രഭാതം, തോമസ്",
+  "Monitoring Anitha Suresh · All vitals stable": "അനിത സുരേഷിനെ നിരീക്ഷിക്കുന്നു · എല്ലാ ആരോഗ്യനിലയും സുസ്ഥിരം",
+  "Monitoring Anitha Suresh": "അനിത സുരേഷിനെ നിരീക്ഷിക്കുന്നു",
+  "All vitals stable": "എല്ലാ ആരോഗ്യനിലയും സുസ്ഥിരം",
+  "Here is an overview of your patients and consultations today.": "നിങ്ങളുടെ രോഗികളുടെയും ഇന്നത്തെ കൺസൾട്ടേഷനുകളുടെയും അവലോകനം ഇതാ.",
+  "Here is your health summary for today. Take care of yourself.": "ഇന്നത്തെ നിങ്ങളുടെ ആരോഗ്യ സംഗ്രഹം ഇതാ. സ്വന്തം ആരോഗ്യം ശ്രദ്ധിക്കുക.",
+  "Care+ System Administration": "കെയർ+ സിസ്റ്റം അഡ്മിനിസ്ട്രേഷൻ",
+  "Operational governance, professional verification & privacy compliance": "പ്രവർത്തന ഭരണം, പ്രൊഫഷണൽ പരിശോധന & സ്വകാര്യതാ പാലനം",
+  "Intelligent Elder Healthcare, Wellbeing Monitoring & Platform Administration. Select a portal below to enter its specialized workspace.": "ബുദ്ധിപരമായ മുതിർന്നവരുടെ ആരോഗ്യ സംരക്ഷണം, ക്ഷേമ നിരീക്ഷണം & പ്ലാറ്റ്‌ഫോം ഭരണം. അനുയോജ്യമായ പോർട്ടൽ തിരഞ്ഞെടുക്കുക.",
+  "Real-time senior wellbeing monitoring, daily medication schedule tracking, upcoming doctor appointments, 24/7 safety notifications, and one-tap emergency calling.": "തത്സമയ മുതിർന്നവരുടെ ആരോഗ്യ നിരീക്ഷണം, ദൈനംദിന മരുന്ന് ഷെഡ്യൂൾ ട്രാക്കിംഗ്, വരാനിരിക്കുന്ന ഡോക്ടർ അപ്പോയിന്റ്മെന്റുകൾ, 24/7 സുരക്ഷാ അറിയിപ്പുകൾ, ഒറ്റ ടാപ്പിൽ അടിയന്തര കോളിംഗ്.",
+  "Continuous Health Telemetry (BP, Glucose, Pulse)": "തുടർച്ചയായ ആരോഗ്യ വിവരങ്ങൾ (രക്തസമ്മർദ്ദം, ഗ്ലൂക്കോസ്, പൾസ്)",
+  "Prescription Schedules & Adherence Timeline": "മരുന്ന് ഷെഡ്യൂളുകളും കൃത്യതാ ടൈംലൈനും",
+  "Emergency Contacts with One-Tap & Voice Calling": "ഒറ്റ ടാപ്പിലും വോയ്സ് കോളിലും അടിയന്തര കോൺടാക്റ്റുകൾ",
+  "Open Family Dashboard →": "കുടുംബ ഡാഷ്‌ബോർഡ് തുറക്കുക →",
+  "System governance, role-based user management, credential verification for healthcare providers, appointment audits, safety logs, and data sharing privacy compliance.": "സിസ്റ്റം ഭരണം, ഉപയോക്തൃ മാനേജ്മെന്റ്, ആരോഗ്യ പ്രവർത്തകരുടെ സർട്ടിഫിക്കറ്റ് പരിശോധന, അപ്പോയിന്റ്മെന്റ് ഓഡിറ്റുകൾ, സുരക്ഷാ ലോഗുകൾ, ഡാറ്റ സ്വകാര്യതാ പാലനം.",
+  "User Governance & Role-Based Access Control": "ഉപയോക്തൃ ഭരണവും റോൾ അധിഷ്ഠിത ആക്സസും",
+  "Doctor & Caregiver Credential Verification Queue": "ഡോക്ടർമാരുടെയും പരിപാലകരുടെയും സർട്ടിഫിക്കറ്റ് പരിശോധനാ നിര",
+  "Audit Logs, Analytics & Patient Privacy Controls": "ഓഡിറ്റ് ലോഗുകൾ, വിശകലനം & രോഗികളുടെ സ്വകാര്യതാ നിയന്ത്രണം",
+  "Open Admin Dashboard →": "അഡ്മിൻ ഡാഷ്‌ബോർഡ് തുറക്കുക →",
+  "Universal Accessibility & Multilingual Support": "സാർവത്രിക പ്രവേശനക്ഷമതയും ബഹുഭാഷാ പിന്തുണയും",
+  "Elder-friendly accessibility controls engineered for senior readability, high contrast visibility, scalable font sizing, and bilingual English & Malayalam interface.": "മുതിർന്നവർക്ക് വായിക്കാൻ എളുപ്പമുള്ള പ്രവേശനക്ഷമതാ ക്രമീകരണങ്ങൾ, ഉയർന്ന കോൺട്രാസ്റ്റ്, മാറ്റാവുന്ന ഫോണ്ട് വലുപ്പം, ഇംഗ്ലീഷ് & മലയാളം ഭാഷാ ഇന്റർഫേസ്.",
+  "Dynamic Text Scaling (A+ / A-) & High-Contrast Mode": "ടെക്സ്റ്റ് വലുപ്പം മാറ്റൽ (A+ / A-) & ഹൈ-കോൺട്രാസ്റ്റ് മോഡ്",
+  "Large Touch Targets & Simplified Navigation Mode": "വലിയ ടച്ച് ബട്ടണുകളും ലളിതമായ നാവിഗേഷനും",
+  "Instant English & Malayalam (മലയാളം) Language Switch": "തൽക്ഷണ ഇംഗ്ലീഷ് & മലയാളം ഭാഷാ മാറ്റം",
+  "Open Accessibility Controls →": "പ്രവേശനക്ഷമതാ ക്രമീകരണങ്ങൾ തുറക്കുക →",
+  "Hands-free voice recognition enabling seniors and family members to search services, check vital status, view notifications, and connect calls by speaking naturally.": "മുതിർന്നവർക്കും കുടുംബാംഗങ്ങൾക്കും സംസാരിച്ച് സേവനങ്ങൾ തിരയാനും ആരോഗ്യനില പരിശോധിക്കാനും അറിയിപ്പുകൾ കാണാനും കോൺടാക്റ്റുകളെ വിളിക്കാനുമുള്ള വോയ്സ് സഹായം.",
+  "Natural Speech Recognition in English & Malayalam": "ഇംഗ്ലീഷിലും മലയാളത്തിലും വോയ്സ് തിരിച്ചറിയൽ",
+  "Quick Voice Routing to Health, Schedule & Alerts": "ആരോഗ്യം, ഷെഡ്യൂൾ, അടിയന്തര അറിയിപ്പുകൾ എന്നിവയിലേക്ക് പെട്ടെന്ന് എത്താം",
+  "Voice Calling Integration for Emergency Contacts": "അടിയന്തര കോൺടാക്റ്റുകളിലേക്ക് വോയ്സ് കോളിംഗ് സംവിധാനം",
+  "Open Voice Navigation →": "വോയ്‌സ് നാവിഗേഷൻ തുറക്കുക →",
+  "Senior Wellbeing Vitals": "മുതിർന്നവരുടെ ആരോഗ്യ വിവരങ്ങൾ",
+  "Continuous physiological readings · Last synced 10m ago": "തുടർച്ചയായ ആരോഗ്യ പരിശോധനകൾ · 10 മിനിറ്റ് മുമ്പ് അപ്ഡേറ്റ് ചെയ്തു",
+  "BLOOD PRESSURE": "രക്തസമ്മർദ്ദം",
+  "Blood Pressure": "രക്തസമ്മർദ്ദം",
+  "BLOOD SUGAR": "രക്തത്തിലെ പഞ്ചസാര",
+  "Blood Sugar": "രക്തത്തിലെ പഞ്ചസാര",
+  "HEART RATE": "ഹൃദയമിടിപ്പ്",
+  "Heart Rate": "ഹൃദയമിടിപ്പ്",
+  "OXYGEN (SPO2)": "ഓക്സിജൻ (SpO2)",
+  "Oxygen (SpO2)": "ഓക്സിജൻ (SpO2)",
+  "TEMPERATURE": "ശരീര താപനില",
+  "Temperature": "ശരീര താപനില",
+  "WEIGHT": "ശരീരഭാരം",
+  "Weight": "ശരീരഭാരം",
+  "Normal": "സാധാരണ",
+  "Normal - 8:00 AM": "സാധാരണ നില - 8:00 AM",
+  "Normal Fasting": "സാധാരണ ഫാസ്റ്റിംഗ്",
+  "Resting Rhythm": "വിശ്രമ താളം",
+  "Optimal Oxygen": "മികച്ച ഓക്സിജൻ നില",
+  "Normal Temp": "സാധാരണ താപനില",
+  "All 6 Metrics Normal": "എല്ലാ 6 പരിശോധനകളും സാധാരണ നിലയിലാണ്",
+  "7-Day Vital Trends": "7 ദിവസത്തെ ആരോഗ്യ ട്രെൻഡുകൾ",
+  "Blood Pressure Trend": "രക്തസമ്മർദ്ദ ട്രെൻഡ്",
+  "Blood Sugar Trend": "രക്തത്തിലെ പഞ്ചസാരയുടെ ട്രെൻഡ്",
+  "Heart Rate & SpO2 Trend": "ഹൃദയമിടിപ്പും ഓക്സിജൻ നിലയും",
+  "Today's Doses on Track": "ഇന്നത്തെ മരുന്നുകൾ കൃത്യമായി",
+  "Next dose: Atorvastatin 10mg scheduled at 8:00 PM with dinner.": "അടുത്ത ഡോസ്: അറ്റോർവാസ്റ്റാറ്റിൻ 10mg രാത്രി 8:00 ന് അത്താഴത്തോടൊപ്പം.",
+  "2 of 3 Taken": "3-ൽ 2 എണ്ണം കഴിച്ചു",
+  "View Full Schedule →": "പൂർണ്ണ ഷെഡ്യൂൾ കാണുക →",
+  "Telehealth Visit": "ടെലിഹെൽത്ത് സന്ദർശനം",
+  "Dr. Joseph (Cardiology)": "ഡോ. ജോസഫ് (കാർഡിയോളജി)",
+  "Today at 3:00 PM · Video consultation follow-up for blood pressure review.": "ഇന്ന് വൈകുന്നേരം 3:00 ന് · രക്തസമ്മർദ്ദ പരിശോധനയ്ക്കുള്ള വീഡിയോ കൺസൾട്ടേഷൻ.",
+  "Confirmed": "സ്ഥിരീകരിച്ചു",
+  "Consultation Details →": "കൺസൾട്ടേഷൻ വിവരങ്ങൾ →",
+  "Smart Alerts": "സ്മാർട്ട് അറിയിപ്പുകൾ",
+  "Home Safety Verified": "വീട്ടിലെ സുരക്ഷ ഉറപ്പാക്കി",
+  "Wearable device heartbeat confirmed 4m ago. Battery at 88%. No fall or SOS events.": "സ്മാർട്ട് വാച്ച് സിഗ്നൽ 4 മിനിറ്റ് മുമ്പ് ലഭിച്ചു. ബാറ്ററി 88%. വീഴ്ചയോ അടിയന്തര സാഹചര്യങ്ങളോ ഇല്ല.",
+  "Check Notifications →": "അറിയിപ്പുകൾ പരിശോധിക്കുക →",
+  "Safety Status": "സുരക്ഷാ നില",
+  "Fall Detection Active": "വീഴ്ച കണ്ടെത്തൽ സജീവം",
+  "Active Telemetry Stream": "തത്സമയ ആരോഗ്യ ഡാറ്റാ സ്ട്രീം",
+  "Battery 88%": "ബാറ്ററി 88%",
+  "Medication Adherence & Schedule": "മരുന്ന് കഴിക്കുന്ന വിവരങ്ങളും ഷെഡ്യൂളും",
+  "Track senior daily prescriptions, adherence timestamps and dosage reminders": "മുതിർന്നവരുടെ ദൈനംദിന മരുന്നുകൾ, കഴിച്ച സമയം, ഡോസ് ഓർമ്മപ്പെടുത്തലുകൾ എന്നിവ കാണുക",
+  "Morning (8:00 AM)": "രാവിലെ (8:00 AM)",
+  "Afternoon (1:00 PM)": "ഉച്ചയ്ക്ക് (1:00 PM)",
+  "Evening / Night (8:00 PM)": "രാത്രി (8:00 PM)",
+  "Taken at 8:05 AM": "രാവിലെ 8:05 ന് കഴിച്ചു",
+  "Taken at 1:15 PM": "ഉച്ചയ്ക്ക് 1:15 ന് കഴിച്ചു",
+  "Scheduled with dinner": "അത്താഴത്തോടൊപ്പം നിശ്ചയിച്ചിരിക്കുന്നു",
+  "Mark as taken": "കഴിച്ചതായി അടയാളപ്പെടുത്തുക",
+  "Mark Taken": "കഴിച്ചതായി അടയാളപ്പെടുത്തുക",
+  "Taken": "കഴിച്ചു",
+  "Due": "കഴിക്കാനുണ്ട്",
+  "Upcoming": "വരാനിരിക്കുന്നത്",
+  "Pending": "തീർപ്പാക്കാത്തത്",
+  "Completed": "പൂർത്തിയായി",
+  "Missed": "വിട്ടുപോയി",
+  "Care Network & Emergency Contacts": "കെയർ നെറ്റ്‌വർക്കും അടിയന്തര കോൺടാക്റ്റുകളും",
+  "Direct voice calling, relationship directory and designated priority responder": "നേരിട്ടുള്ള വോയ്സ് കോളിംഗ്, ബന്ധുക്കളുടെ പട്ടിക, പ്രധാന റെസ്‌പോണ്ടർ",
+  "+ Add Contact": "+ കോൺടാക്റ്റ് ചേർക്കുക",
+  "Add Care & Emergency Contact": "കെയർ & എമർജൻസി കോൺടാക്റ്റ് ചേർക്കുക",
+  "Full Name *": "പൂർണ്ണമായ പേര് *",
+  "Relationship / Role *": "ബന്ധം / റോൾ *",
+  "Phone Number *": "ഫോൺ നമ്പർ *",
+  "Contact Category": "കോൺടാക്റ്റ് വിഭാഗം",
+  "Mark as Primary Emergency Responder": "പ്രധാന അടിയന്തര റെസ്‌പോണ്ടറായി അടയാളപ്പെടുത്തുക",
+  "Save Contact": "കോൺടാക്റ്റ് സേവ് ചെയ്യുക",
+  "Call": "വിളിക്കുക",
+  "Voice Call": "വോയ്സ് കോൾ",
+  "Primary Responder": "പ്രധാന റെസ്‌പോണ്ടർ",
+  "Daughter": "മകൾ",
+  "Primary Physician": "പ്രധാന ഡോക്ടർ",
+  "Elder Care Nurse": "മുതിർന്നവരുടെ നഴ്സ്",
+  "Ambulance & Emergency": "ആംബുലൻസും അടിയന്തര സേവനങ്ങളും",
+  "Governance, Verifications & Audit Records": "ഭരണം, പരിശോധനകൾ & ഓഡിറ്റ് രേഖകൾ",
+  "System Overview": "സിസ്റ്റം അവലോകനം",
+  "Total Registered Users": "ആകെ രജിസ്റ്റർ ചെയ്ത ഉപയോക്താക്കൾ",
+  "Pending Verifications": "തീർപ്പാക്കാത്ത പരിശോധനകൾ",
+  "Today's Appointments": "ഇന്നത്തെ അപ്പോയിന്റ്മെന്റുകൾ",
+  "Active SOS Emergencies": "സജീവമായ അടിയന്തര സാഹചര്യങ്ങൾ",
+  "Verification Queue": "പരിശോധനാ നിര",
+  "Doctor & Caregiver Credential Verification": "ഡോക്ടർമാരുടെയും പരിപാലകരുടെയും സർട്ടിഫിക്കറ്റ് പരിശോധന",
+  "Applicant Name": "അപേക്ഷകന്റെ പേര്",
+  "Profession / Role": "തൊഴിൽ / റോൾ",
+  "License / Reg No": "ലൈസൻസ് / രജിസ്ട്രേഷൻ നമ്പർ",
+  "Submitted Date": "സമർപ്പിച്ച തീയതി",
+  "Status": "സ്റ്റാറ്റസ്",
+  "Actions": "നടപടികൾ",
+  "Approve": "അംഗീകരിക്കുക",
+  "Reject": "നിരസിക്കുക",
+  "View Certificate": "സർട്ടിഫിക്കറ്റ് കാണുക",
+  "Approved": "അംഗീകരിച്ചു",
+  "Rejected": "നിരസിച്ചു",
+  "Under Review": "പരിശോധനയിലാണ്",
+  "User Governance": "ഉപയോക്തൃ ഭരണം",
+  "Audit Logs & Security Trail": "ഓഡിറ്റ് ലോഗുകളും സുരക്ഷാ രേഖകളും",
+  "Timestamp": "സമയം",
+  "User": "ഉപയോക്താവ്",
+  "Event": "ഇവന്റ്",
+  "IP Address": "IP വിലാസം",
+  "Severity": "തീവ്രത",
+  "Today's Appointments & Consultations": "ഇന്നത്തെ അപ്പോയിന്റ്മെന്റുകളും കൺസൾട്ടേഷനുകളും",
+  "Patient Telemetry Queue": "രോഗികളുടെ ആരോഗ്യ ഡാറ്റാ നിര",
+  "Patient Name": "രോഗിയുടെ പേര്",
+  "Age / Gender": "പ്രായം / ലിംഗം",
+  "Vitals Status": "ആരോഗ്യനില",
+  "Scheduled Time": "ഷെഡ്യൂൾ ചെയ്ത സമയം",
+  "Consultation Type": "കൺസൾട്ടേഷൻ തരം",
+  "Start Video Consultation": "വീഡിയോ കൺസൾട്ടേഷൻ ആരംഭിക്കുക",
+  "Join Consultation": "കൺസൾട്ടേഷനിൽ ചേരുക",
+  "View Records": "രേഖകൾ കാണുക",
+  "Issue Prescription": "പ്രിസ്ക്രിപ്ഷൻ നൽകുക",
+  "My Health Summary": "എന്റെ ആരോഗ്യ സംഗ്രഹം",
+  "Today's Care Plan": "ഇന്നത്തെ ആരോഗ്യ പരിപാലന പ്ലാൻ",
+  "Need Help?": "സഹായം ആവശ്യമുണ്ടോ?",
+  "Emergency SOS Button": "അടിയന്തര SOS ബട്ടൺ",
+  "Press and hold to notify emergency contacts and dispatch help.": "അടിയന്തര കോൺടാക്റ്റുകളെ അറിയിക്കാൻ ബട്ടൺ അമർത്തിപ്പിടിക്കുക.",
+  "Trigger Emergency SOS": "അടിയന്തര SOS നൽകുക",
+  "Caregiver Notification": "പരിപാലക അറിയിപ്പുകൾ",
+  "Allow daily check-in notifications to your assigned caregiver.": "നിങ്ങൾക്കുള്ള പരിപാലകന് പ്രതിദിന അറിയിപ്പുകൾ നൽകാൻ അനുവദിക്കുക.",
+  "Sign In to Care+": "കെയർ+ ലേക്ക് സൈൻ ഇൻ ചെയ്യുക",
+  "Select your workspace and enter your credentials.": "നിങ്ങളുടെ വർക്ക്സ്പേസ് തിരഞ്ഞെടുത്ത് ലോഗിൻ വിവരങ്ങൾ നൽകുക.",
+  "Username or Email": "ഉപയോക്തൃനാമം അല്ലെങ്കിൽ ഇമെയിൽ",
+  "Password": "പാസ്‌വേഡ്",
+  "Show/Hide": "കാണിക്കുക/മറയ്ക്കുക",
+  "Sign In →": "സൈൻ ഇൻ ചെയ്യുക →",
+  "Cancel": "റദ്ദാക്കുക",
+  "Save": "സേവ് ചെയ്യുക",
+  "Close": "അടയ്ക്കുക",
+  "Dismiss": "അടയ്ക്കുക",
+  "Switch Care+ Role": "കെയർ+ റോൾ മാറ്റുക",
+  "Select a dashboard to view the specialized interface for that role.": "ആ റോളിനായുള്ള പ്രത്യേക ഇന്റർഫേസ് കാണാൻ ഡാഷ്‌ബോർഡ് തിരഞ്ഞെടുക്കുക.",
+  "Speak naturally to navigate across health vitals, medication schedule, or family contacts.": "ആരോഗ്യ വിവരങ്ങൾ, മരുന്ന് ഷെഡ്യൂൾ, കോൺടാക്റ്റുകൾ എന്നിവയിലേക്ക് നാവിഗേറ്റ് ചെയ്യാൻ സംസാരിക്കുക.",
+  "Listening...": "കേൾക്കുന്നു...",
+  "Start Speaking": "സംസാരിക്കാൻ ആരംഭിക്കുക",
+  "Stop Listening": "നിർത്തുക",
+  "Font Size Scaling": "ഫോണ്ട് വലുപ്പം മാറ്റൽ",
+  "Large (A+)": "വലുത് (A+)",
+  "Extra Large (A++)": "വളരെ വലുത് (A++)",
+  "High Contrast Theme": "ഹൈ-കോൺട്രാസ്റ്റ് തീം",
+  "Enhanced contrast for seniors with low vision": "കാഴ്ചക്കുറവുള്ള മുതിർന്നവർക്കായി ഉയർന്ന കോൺട്രാസ്റ്റ്",
+  "Large Button Targets": "വലിയ ബട്ടണുകൾ",
+  "Easy-to-tap touch areas for older adults": "മുതിർന്നവർക്ക് എളുപ്പത്തിൽ അമർത്താൻ വലിയ ടച്ച് ബട്ടണുകൾ",
+  "Voice Assistant Auto-Prompt": "വോയ്സ് അസിസ്റ്റന്റ് ഓട്ടോ-പ്രോംപ്റ്റ്",
+  "Automatic voice listening when navigating": "നാവിഗേറ്റ് ചെയ്യുമ്പോൾ തനിയെ വോയ്സ് കേൾക്കൽ",
+  "Save Accessibility Preferences": "പ്രവേശനക്ഷമതാ ക്രമീകരണങ്ങൾ സേവ് ചെയ്യുക"
+},
 
   init: function () {
     var savedLang = localStorage.getItem('careplus_lang') || 'en';
-    this.setLanguage(savedLang);
+    this.currentLang = savedLang;
+    this.applyLanguage(savedLang);
 
-    var selectors = document.querySelectorAll('.lang-selector, #langSelect');
-    selectors.forEach(function (sel) {
+    var self = this;
+    document.querySelectorAll('.lang-selector, #langSelect').forEach(function (sel) {
       sel.value = savedLang;
-      sel.addEventListener('change', function () {
-        CarePlusI18n.setLanguage(sel.value);
-        showToast(sel.value === 'ml' ? 'ഭാഷ മലയാളത്തിലേക്ക് മാറ്റി.' : 'Language switched to English.');
-      });
+      sel.onchange = function () {
+        self.setLanguage(sel.value);
+        if (typeof showToast === 'function') {
+          showToast(sel.value === 'ml' ? 'ഭാഷ മലയാളത്തിലേക്ക് മാറ്റി.' : 'Language switched to English.');
+        }
+      };
     });
-  },
-
-  t: function (key) {
-    var dict = this.dictionary[this.currentLang] || this.dictionary['en'];
-    return dict[key] || key;
   },
 
   setLanguage: function (lang) {
-    if (!this.dictionary[lang]) lang = 'en';
+    if (lang !== 'en' && lang !== 'ml') lang = 'en';
     this.currentLang = lang;
     localStorage.setItem('careplus_lang', lang);
     document.documentElement.lang = lang;
-
-    var dict = this.dictionary[lang];
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key]) {
-        if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) {
-          el.value = dict[key];
-        } else if (el.tagName === 'INPUT' && el.type === 'text') {
-          el.placeholder = dict[key];
-        } else {
-          el.textContent = dict[key];
-        }
-      }
-    });
+    this.applyLanguage(lang);
 
     // Sync all dropdowns on page
     document.querySelectorAll('.lang-selector, #langSelect').forEach(function (sel) {
       sel.value = lang;
+    });
+  },
+
+  applyLanguage: function (lang) {
+    var self = this;
+    var isML = (lang === 'ml');
+
+    // Sort keys by descending length to match longest phrases first
+    var sortedKeys = Object.keys(self.textMap).sort(function (a, b) {
+      return b.length - a.length;
+    });
+
+    function translateString(str) {
+      if (!str) return str;
+      var trimmed = str.trim();
+      if (self.textMap[trimmed]) {
+        return str.replace(trimmed, self.textMap[trimmed]);
+      }
+      // Substring check for phrases
+      var res = str;
+      for (var i = 0; i < sortedKeys.length; i++) {
+        var k = sortedKeys[i];
+        if (res.indexOf(k) !== -1) {
+          res = res.split(k).join(self.textMap[k]);
+        }
+      }
+      return res;
+    }
+
+    function walkNode(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        var val = node.nodeValue;
+        if (!val || !val.trim()) return;
+
+        if (isML) {
+          if (node._origText === undefined) {
+            node._origText = val;
+          }
+          node.nodeValue = translateString(node._origText);
+        } else {
+          if (node._origText !== undefined) {
+            node.nodeValue = node._origText;
+          }
+        }
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        var tag = node.tagName.toUpperCase();
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE') return;
+
+        // Translate placeholders
+        if (node.placeholder) {
+          if (isML) {
+            if (node._origPlaceholder === undefined) node._origPlaceholder = node.placeholder;
+            node.placeholder = translateString(node._origPlaceholder);
+          } else if (node._origPlaceholder !== undefined) {
+            node.placeholder = node._origPlaceholder;
+          }
+        }
+
+        // Translate input button/submit values
+        if (tag === 'INPUT' && (node.type === 'button' || node.type === 'submit')) {
+          if (isML) {
+            if (node._origValue === undefined) node._origValue = node.value;
+            node.value = translateString(node._origValue);
+          } else if (node._origValue !== undefined) {
+            node.value = node._origValue;
+          }
+        }
+
+        // Process children
+        for (var i = 0; i < node.childNodes.length; i++) {
+          walkNode(node.childNodes[i]);
+        }
+      }
+    }
+
+    var root = document.getElementById('app-root') || document.body;
+    walkNode(root);
+
+    // Also translate universal modals
+    document.querySelectorAll('.modal-overlay').forEach(function (modal) {
+      walkNode(modal);
     });
   }
 };

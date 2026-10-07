@@ -79,6 +79,26 @@
         </div>
 
         <div class="header__actions">
+          <div class="header-actions-group">
+            <!-- Language Selector -->
+            <select class="lang-selector header-select" aria-label="Select Language">
+              <option value="en">English</option>
+              <option value="ml">മലയാളം</option>
+            </select>
+
+            <!-- Accessibility Quick Button -->
+            <button class="header-pill-btn" data-action="open-a11y" aria-label="Accessibility Settings">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              <span>Accessibility</span>
+            </button>
+
+            <!-- Voice Navigation -->
+            <button class="header-pill-btn header-pill-btn--voice" data-action="open-voice" aria-label="Voice Navigation">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              <span>🎙 Voice Nav</span>
+            </button>
+          </div>
+
           <!-- Notifications -->
           <div class="dropdown">
             <button class="icon-button" id="notifBtn" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
