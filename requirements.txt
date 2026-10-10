@@ -2,3 +2,6 @@ streamlit
 firebase-admin
 requests
 extra-streamlit-components
+vosk 
+sounddevice 
+pyttsx3
