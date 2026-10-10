@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 
 st.set_page_config(
@@ -8,16 +7,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Dashboard URLs can be configured through environment variables or Streamlit secrets.
-# Local defaults assume each dashboard is running on its own port.
-def configured_url(key: str, default: str) -> str:
-    try:
-        value = st.secrets.get("dashboard_urls", {}).get(key)
-        if value:
-            return str(value).rstrip("/")
-    except Exception:
-        pass
-    return os.getenv(f"CAREPLUS_{key.upper()}_URL", default).rstrip("/")
+# Hosted dashboard URLs. These are intentionally fixed so local defaults or
+# Streamlit Secrets cannot redirect users to localhost.
 
 DASHBOARDS = [
     {
@@ -25,7 +16,7 @@ DASHBOARDS = [
         "title": "Elderly Dashboard",
         "icon": "💚",
         "description": "Manage medicines, health history, appointments, wellbeing, emergency contacts, and SOS.",
-        "url": configured_url("elderly", "https://elderly-dash.streamlit.app"),
+        "url": "https://elderly-dash.streamlit.app/",
         "audience": "For older adults",
     },
     {
@@ -33,7 +24,7 @@ DASHBOARDS = [
         "title": "Caregiver Dashboard",
         "icon": "🤝",
         "description": "Coordinate care, support medication adherence, manage contacts, and respond to alerts.",
-        "url": configured_url("caregiver", "https://caregiver-dash.streamlit.app"),
+        "url": "https://caregiver-dash.streamlit.app/",
         "audience": "For family and trusted caregivers",
     },
     {
@@ -41,7 +32,7 @@ DASHBOARDS = [
         "title": "Doctor Dashboard",
         "icon": "🩺",
         "description": "Review patient health records, manage prescriptions, and coordinate appointments.",
-        "url": configured_url("doctor", "https://doctor-dash.streamlit.app"),
+        "url": "https://doctor-dash.streamlit.app/",
         "audience": "For clinicians",
     },
 ]
