@@ -25,7 +25,7 @@ DASHBOARDS = [
         "title": "Elderly Dashboard",
         "icon": "💚",
         "description": "Manage medicines, health history, appointments, wellbeing, emergency contacts, and SOS.",
-        "url": configured_url("elderly", "http://localhost:8501"),
+        "url": configured_url("elderly", "https://elderly-dash.streamlit.app"),
         "audience": "For older adults",
     },
     {
@@ -33,7 +33,7 @@ DASHBOARDS = [
         "title": "Caregiver Dashboard",
         "icon": "🤝",
         "description": "Coordinate care, support medication adherence, manage contacts, and respond to alerts.",
-        "url": configured_url("caregiver", "http://localhost:8502"),
+        "url": configured_url("caregiver", "https://caregiver-dash.streamlit.app"),
         "audience": "For family and trusted caregivers",
     },
     {
@@ -41,7 +41,7 @@ DASHBOARDS = [
         "title": "Doctor Dashboard",
         "icon": "🩺",
         "description": "Review patient health records, manage prescriptions, and coordinate appointments.",
-        "url": configured_url("doctor", "http://localhost:8503"),
+        "url": configured_url("doctor", "https://doctor-dash.streamlit.app"),
         "audience": "For clinicians",
     },
 ]
