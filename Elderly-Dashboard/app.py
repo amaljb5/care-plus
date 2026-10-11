@@ -921,8 +921,8 @@ if page == "emergency":
 # ---------------- Browser microphone + offline Vosk Voice Assistant ----------------
 elif page == "voice":
     st.header("🎙️ Care+ Voice Assistant")
-    st.write("Care+ will request microphone access automatically. Allow it in your browser, then say a command.")
-    st.info("Your browser controls microphone permission. If it was blocked earlier, open the site settings beside the address bar and set Microphone to Allow.")
+    st.write("Tap Start recording, say a command, then tap Stop recording.")
+    st.info("This version records through your browser microphone, so it does not need PortAudio or sounddevice on Streamlit Cloud.")
 
     _voice_model_name = "vosk-model-small-en-in-0.4"
     _voice_model_candidates = [
@@ -962,101 +962,99 @@ elif page == "voice":
                 return destination, response_text
         return "", "Sorry, I didn't recognize that."
 
-    if not _voice_model_path:
-        st.error("Vosk model not found on the hosted app. Include `vosk-model-small-en-in-0.4` in the deployed repository beside app.py, or inside careplus_voice_offline_starter.")
-    else:
-        try:
-            import streamlit.components.v1 as components
-            from vosk import Model, KaldiRecognizer
+    try:
+        from streamlit_mic_recorder import mic_recorder
+        _browser_audio = mic_recorder(
+            start_prompt="🎙️ Start recording",
+            stop_prompt="⏹️ Stop recording",
+            just_once=True,
+            use_container_width=True,
+            key="careplus_browser_voice_recorder",
+        )
+    except ImportError:
+        _browser_audio = None
+        st.error("Browser microphone package is missing. Add `streamlit-mic-recorder` to requirements.txt and redeploy.")
 
-            # Load Vosk once per Streamlit process.
-            @st.cache_resource
-            def _careplus_get_vosk_model(model_path):
-                return Model(model_path)
+    if _browser_audio and _browser_audio.get("bytes"):
+        if not _voice_model_path:
+            st.error("Vosk model not found on the hosted app. Include `vosk-model-small-en-in-0.4` in the deployed repository beside app.py, or inside careplus_voice_offline_starter.")
+        else:
+            try:
+                import io
+                import wave
+                import struct
+                import subprocess
+                import tempfile
+                from pathlib import Path
+                from vosk import Model, KaldiRecognizer
 
-            _model = _careplus_get_vosk_model(_voice_model_path)
+                # streamlit-mic-recorder commonly returns WebM/Opus bytes, not WAV.
+                # Convert the browser recording to mono 16-bit PCM WAV before Vosk reads it.
+                _audio_bytes = _browser_audio["bytes"]
+                with tempfile.TemporaryDirectory() as _voice_tmpdir:
+                    _input_path = os.path.join(_voice_tmpdir, "browser_recording.webm")
+                    _output_path = os.path.join(_voice_tmpdir, "browser_recording.wav")
+                    with open(_input_path, "wb") as _audio_file:
+                        _audio_file.write(_audio_bytes)
 
-            # Browser component requests microphone permission on mount, then continuously
-            # captures short chunks. The browser's permission prompt cannot be forced by Python.
-            _voice_component_html = r"""
-            <div id="careplus-voice-root" style="font-family:inherit;color:#17352B;">
-              <div id="careplus-mic-status" role="status" style="padding:12px 14px;border-radius:12px;background:#E0F2FE;margin:8px 0;">
-                Requesting microphone access…
-              </div>
-              <div id="careplus-transcript" style="padding:12px 14px;border-radius:12px;background:#FFFFFF;border:1px solid #C5DCD0;min-height:48px;margin:8px 0;">
-                Waiting for a spoken command…
-              </div>
-              <button id="careplus-mic-retry" type="button" style="display:none;border:0;border-radius:999px;padding:10px 16px;background:#176B4D;color:white;font-weight:700;">
-                Allow microphone / try again
-              </button>
-            </div>
-            <script>
-            (async () => {
-              const status = document.getElementById("careplus-mic-status");
-              const transcript = document.getElementById("careplus-transcript");
-              const retry = document.getElementById("careplus-mic-retry");
-              let stream = null, recorder = null, timer = null, busy = false;
-              function showError(message) {
-                status.textContent = message;
-                status.style.background = "#FCE4E4";
-                retry.style.display = "inline-block";
-              }
-              async function startListening() {
-                try {
-                  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                    showError("Microphone access is not supported here. Open Care+ in a current HTTPS browser.");
-                    return;
-                  }
-                  status.textContent = "Please allow microphone access in the browser prompt…";
-                  stream = await navigator.mediaDevices.getUserMedia({audio: true});
-                  status.textContent = "🎙️ Listening. Say a Care+ command naturally.";
-                  status.style.background = "#DCFCE7";
-                  retry.style.display = "none";
-                  const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
-                  recorder = new MediaRecorder(stream, mime ? {mimeType:mime} : {});
-                  recorder.ondataavailable = async (event) => {
-                    if (!event.data || event.data.size === 0 || busy) return;
-                    busy = true;
-                    try {
-                      const data = await event.data.arrayBuffer();
-                      const bytes = Array.from(new Uint8Array(data));
-                      window.parent.postMessage({type:"careplus_voice_chunk", bytes:bytes}, "*");
-                    } catch (e) {}
-                    busy = false;
-                  };
-                  recorder.start(2500);
-                  window.addEventListener("beforeunload", () => {
-                    try { if (recorder && recorder.state !== "inactive") recorder.stop(); } catch(e) {}
-                    try { if (stream) stream.getTracks().forEach(track => track.stop()); } catch(e) {}
-                  });
-                } catch (e) {
-                  showError("Microphone permission was not granted. Allow Microphone for this site, then click “Allow microphone / try again”.");
-                }
-              }
-              retry.addEventListener("click", startListening);
-              await startListening();
-            })();
-            </script>
-            """
-            components.html(_voice_component_html, height=150)
+                    _conversion = subprocess.run(
+                        [
+                            "ffmpeg", "-y", "-loglevel", "error",
+                            "-i", _input_path,
+                            "-ac", "1", "-ar", "16000", "-sample_fmt", "s16",
+                            _output_path,
+                        ],
+                        capture_output=True, text=True, timeout=30,
+                    )
+                    if _conversion.returncode != 0 or not os.path.isfile(_output_path):
+                        raise RuntimeError(
+                            "Could not convert browser audio. Ensure ffmpeg is installed "
+                            "using a root-level packages.txt containing: ffmpeg"
+                        )
 
-            st.caption("Commands: “show my medicines”, “show my health”, “appointments”, “call my doctor”, “ask for care”, “daily wellbeing”, “health documents”, or “I need help”.")
+                    with wave.open(_output_path, "rb") as _wav:
+                        _channels = _wav.getnchannels()
+                        _sample_width = _wav.getsampwidth()
+                        _sample_rate = _wav.getframerate()
+                        _frames = _wav.readframes(_wav.getnframes())
 
-            # Streamlit components communicate asynchronously. A full duplex audio bridge
-            # needs a custom component; this embedded browser-only capture displays the
-            # permission/listening UI, but cannot pass arbitrary postMessage data back to
-            # Python without that component bridge. Keep this limitation visible instead
-            # of pretending a voice command was processed.
-            st.warning(
-                "Microphone permission and browser listening are enabled in this preview, "
-                "but this basic embedded component cannot deliver live audio chunks back to "
-                "Python/Vosk. To execute commands hands-free, the next change must use a "
-                "proper Streamlit custom component or streamlit-webrtc audio callback."
-            )
-        except ImportError:
-            st.error("Vosk is missing on the hosted app. Add `vosk` to requirements.txt and redeploy.")
-        except Exception as _voice_exc:
-            st.error(f"Voice assistant could not start: {_voice_exc}")
+                if _sample_width != 2:
+                    st.error("The browser recording was not 16-bit PCM. Please try recording again.")
+                    st.stop()
+
+                # Vosk expects mono audio. If the browser records stereo, average the
+                # left/right 16-bit samples into one channel without PortAudio.
+                if _channels > 1:
+                    _samples = struct.unpack("<" + "h" * (len(_frames) // 2), _frames)
+                    _mono = []
+                    for _i in range(0, len(_samples) - (_channels - 1), _channels):
+                        _mono.append(int(sum(_samples[_i:_i + _channels]) / _channels))
+                    _frames = struct.pack("<" + "h" * len(_mono), *_mono)
+
+                _model = Model(_voice_model_path)
+                _recognizer = KaldiRecognizer(_model, _sample_rate)
+                _recognizer.AcceptWaveform(_frames)
+                _voice_result = json.loads(_recognizer.FinalResult())
+                _voice_transcript = str(_voice_result.get("text", "")).strip()
+
+                if not _voice_transcript:
+                    st.warning("I couldn't hear a clear command. Tap Start recording and try again.")
+                else:
+                    st.session_state["careplus_last_voice_transcript"] = _voice_transcript
+                    _voice_destination, _voice_response = _careplus_route_voice_command(_voice_transcript)
+                    st.session_state["careplus_last_voice_response"] = _voice_response
+                    st.write(f"**I heard:** “{_voice_transcript}”")
+                    if _voice_destination == "emergency":
+                        st.session_state.sos_confirmation = True
+                        st.session_state.page = "emergency"
+                        st.rerun()
+                    elif _voice_destination:
+                        st.session_state.page = _voice_destination
+                        st.rerun()
+                    else:
+                        st.warning(_voice_response)
+            except Exception as _voice_exc:
+                st.error(f"Voice recognition failed: {_voice_exc}")
 
     if st.session_state.get("careplus_last_voice_transcript"):
         st.caption(f"Last command: “{st.session_state['careplus_last_voice_transcript']}”")
