@@ -918,13 +918,12 @@ if page == "emergency":
     else:
         st.info("No emergency alerts saved yet.")
 
-# ---------------- Offline Voice Assistant ----------------
+# ---------------- Browser microphone + offline Vosk Voice Assistant ----------------
 elif page == "voice":
     st.header("🎙️ Care+ Voice Assistant")
-    st.write("Care+ Voice is activated. Speak a command in English and the matching section will open.")
-    st.info("The offline assistant listens for a short command whenever it starts. Use the round microphone button at the bottom-right to activate it again.")
+    st.write("Tap Start recording, say a command, then tap Stop recording.")
+    st.info("This version records through your browser microphone, so it does not need PortAudio or sounddevice on Streamlit Cloud.")
 
-    # Locate the model whether it is beside this app.py or remains in the starter folder.
     _voice_model_name = "vosk-model-small-en-in-0.4"
     _voice_model_candidates = [
         os.path.join(os.path.dirname(os.path.abspath(__file__)), _voice_model_name),
@@ -938,65 +937,9 @@ elif page == "voice":
         None,
     )
 
-    def _careplus_voice_recognize(seconds: int = 6) -> str:
-        try:
-            import sounddevice as sd
-            from vosk import Model, KaldiRecognizer
-        except ImportError as exc:
-            raise RuntimeError(
-                "Voice packages are missing. Run: pip install vosk sounddevice pyttsx3"
-            ) from exc
-        if not _voice_model_path:
-            raise RuntimeError(
-                "Could not find the Vosk model. Put `vosk-model-small-en-in-0.4` "
-                "beside this app.py, or inside `careplus_voice_offline_starter` beside the app."
-            )
-
-        model = Model(_voice_model_path)
-        recognizer = KaldiRecognizer(model, 16000)
-        audio_queue = queue.Queue()
-
-        def _audio_callback(indata, frames, callback_time, status):
-            audio_queue.put(bytes(indata))
-
-        transcript_parts = []
-        deadline = time_module.monotonic() + seconds
-        with sd.RawInputStream(
-            samplerate=16000,
-            blocksize=8000,
-            dtype="int16",
-            channels=1,
-            callback=_audio_callback,
-        ):
-            while time_module.monotonic() < deadline:
-                try:
-                    audio_data = audio_queue.get(timeout=0.25)
-                except queue.Empty:
-                    continue
-                if recognizer.AcceptWaveform(audio_data):
-                    result = json.loads(recognizer.Result())
-                    if result.get("text"):
-                        transcript_parts.append(result["text"])
-            final_result = json.loads(recognizer.FinalResult())
-            if final_result.get("text"):
-                transcript_parts.append(final_result["text"])
-        return " ".join(transcript_parts).strip()
-
-    def _careplus_voice_speak(text: str):
-        try:
-            import pyttsx3
-            engine = pyttsx3.init()
-            engine.setProperty("rate", 155)
-            engine.say(text)
-            engine.runAndWait()
-        except Exception:
-            # Keep the on-screen response available if OS text-to-speech is unavailable.
-            pass
-
     def _careplus_route_voice_command(transcript: str):
         normalized = transcript.lower().strip()
         command_routes = [
-            # SOS is checked first and still requires confirmation.
             (("sos", "emergency", "help me", "i need help", "emergency help"), "emergency",
              "You asked for emergency help. Please confirm on the SOS screen before opening Google Meet."),
             (("my health documents", "health documents", "medical documents", "my documents", "documents", "health files"), "documents",
@@ -1017,49 +960,88 @@ elif page == "voice":
         for phrases, destination, response_text in command_routes:
             if any(phrase in normalized for phrase in phrases):
                 return destination, response_text
-        return "", (
-            "Sorry, I didn't recognize that."
-        )
+        return "", "Sorry, I didn't recognize that."
 
-    _voice_should_listen = bool(st.session_state.pop("careplus_voice_auto_listen", False)) or not st.session_state.get("careplus_voice_initial_greeting_done", False)
-    if _voice_should_listen:
-        try:
-            _careplus_voice_speak("Voice system active")
-            st.session_state["careplus_voice_initial_greeting_done"] = True
-            with st.spinner("Voice system activated. Listening for your command…"):
-                _voice_transcript = _careplus_voice_recognize(6)
-            if not _voice_transcript:
-                st.warning("I didn't hear a command. Tap the round microphone button at the bottom-right and try again.")
-            else:
-                st.session_state["careplus_last_voice_transcript"] = _voice_transcript
-                _voice_destination, _voice_response = _careplus_route_voice_command(_voice_transcript)
-                st.session_state["careplus_last_voice_response"] = _voice_response
-                _careplus_voice_speak(_voice_response)
-                if _voice_destination == "emergency":
-                    st.session_state.sos_confirmation = True
-                    st.session_state.page = "emergency"
-                    st.rerun()
-                elif _voice_destination:
-                    st.session_state.page = _voice_destination
-                    st.rerun()
-        except Exception as _voice_exc:
-            st.error(f"Voice assistant could not start: {_voice_exc}")
+    try:
+        from streamlit_mic_recorder import mic_recorder
+        _browser_audio = mic_recorder(
+            start_prompt="🎙️ Start recording",
+            stop_prompt="⏹️ Stop recording",
+            just_once=True,
+            use_container_width=True,
+            key="careplus_browser_voice_recorder",
+        )
+    except ImportError:
+        _browser_audio = None
+        st.error("Browser microphone package is missing. Add `streamlit-mic-recorder` to requirements.txt and redeploy.")
+
+    if _browser_audio and _browser_audio.get("bytes"):
+        if not _voice_model_path:
+            st.error("Vosk model not found on the hosted app. Include `vosk-model-small-en-in-0.4` in the deployed repository beside app.py, or inside careplus_voice_offline_starter.")
+        else:
+            try:
+                import io
+                import wave
+                import struct
+                from vosk import Model, KaldiRecognizer
+
+                _wav_bytes = _browser_audio["bytes"]
+                with wave.open(io.BytesIO(_wav_bytes), "rb") as _wav:
+                    _channels = _wav.getnchannels()
+                    _sample_width = _wav.getsampwidth()
+                    _sample_rate = _wav.getframerate()
+                    _frames = _wav.readframes(_wav.getnframes())
+
+                if _sample_width != 2:
+                    st.error("The browser recording was not 16-bit PCM. Please try recording again.")
+                    st.stop()
+
+                # Vosk expects mono audio. If the browser records stereo, average the
+                # left/right 16-bit samples into one channel without PortAudio.
+                if _channels > 1:
+                    _samples = struct.unpack("<" + "h" * (len(_frames) // 2), _frames)
+                    _mono = []
+                    for _i in range(0, len(_samples) - (_channels - 1), _channels):
+                        _mono.append(int(sum(_samples[_i:_i + _channels]) / _channels))
+                    _frames = struct.pack("<" + "h" * len(_mono), *_mono)
+
+                _model = Model(_voice_model_path)
+                _recognizer = KaldiRecognizer(_model, _sample_rate)
+                _recognizer.AcceptWaveform(_frames)
+                _voice_result = json.loads(_recognizer.FinalResult())
+                _voice_transcript = str(_voice_result.get("text", "")).strip()
+
+                if not _voice_transcript:
+                    st.warning("I couldn't hear a clear command. Tap Start recording and try again.")
+                else:
+                    st.session_state["careplus_last_voice_transcript"] = _voice_transcript
+                    _voice_destination, _voice_response = _careplus_route_voice_command(_voice_transcript)
+                    st.session_state["careplus_last_voice_response"] = _voice_response
+                    st.write(f"**I heard:** “{_voice_transcript}”")
+                    if _voice_destination == "emergency":
+                        st.session_state.sos_confirmation = True
+                        st.session_state.page = "emergency"
+                        st.rerun()
+                    elif _voice_destination:
+                        st.session_state.page = _voice_destination
+                        st.rerun()
+                    else:
+                        st.warning(_voice_response)
+            except Exception as _voice_exc:
+                st.error(f"Voice recognition failed: {_voice_exc}")
 
     if st.session_state.get("careplus_last_voice_transcript"):
-        st.subheader("I heard")
-        st.write(f"“{st.session_state['careplus_last_voice_transcript']}”")
-    if st.session_state.get("careplus_last_voice_response"):
-        st.success(st.session_state["careplus_last_voice_response"])
+        st.caption(f"Last command: “{st.session_state['careplus_last_voice_transcript']}”")
 
     with st.expander("Commands you can say"):
         st.markdown(
-            "- **My Medicines:** “Show my medicines” / “Open medicines”\\n"
-            "- **My Health:** “Show my health” / “Health history”\\n"
-            "- **My Appointments:** “Show my appointments” / “Next appointment”\\n"
-            "- **Call Family or Doctor:** “Call my family” / “Call my doctor”\\n"
-            "- **Ask for Care:** “Ask for care” / “I need a caregiver”\\n"
-            "- **How Am I Feeling?:** “How am I feeling?” / “Daily wellbeing”\\n"
-            "- **My Health Documents:** “Open my health documents” / “Show my documents”\\n"
+            "- **My Medicines:** “Show my medicines” / “Open medicines”\n"
+            "- **My Health:** “Show my health” / “Health history”\n"
+            "- **My Appointments:** “Show my appointments” / “Next appointment”\n"
+            "- **Call Family or Doctor:** “Call my family” / “Call my doctor”\n"
+            "- **Ask for Care:** “Ask for care” / “I need a caregiver”\n"
+            "- **How Am I Feeling?:** “How am I feeling?” / “Daily wellbeing”\n"
+            "- **My Health Documents:** “Open my health documents” / “Show my documents”\n"
             "- **SOS:** “I need help” (opens the existing SOS confirmation page)"
         )
 # ---------------- Medicines: Member 2 planned data model ----------------
