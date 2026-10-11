@@ -5,3 +5,4 @@ extra-streamlit-components
 vosk 
 sounddevice 
 pyttsx3
+streamlit-mic-recorder
