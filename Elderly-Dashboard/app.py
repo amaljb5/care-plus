@@ -983,14 +983,40 @@ elif page == "voice":
                 import io
                 import wave
                 import struct
+                import subprocess
+                import tempfile
+                from pathlib import Path
                 from vosk import Model, KaldiRecognizer
 
-                _wav_bytes = _browser_audio["bytes"]
-                with wave.open(io.BytesIO(_wav_bytes), "rb") as _wav:
-                    _channels = _wav.getnchannels()
-                    _sample_width = _wav.getsampwidth()
-                    _sample_rate = _wav.getframerate()
-                    _frames = _wav.readframes(_wav.getnframes())
+                # streamlit-mic-recorder commonly returns WebM/Opus bytes, not WAV.
+                # Convert the browser recording to mono 16-bit PCM WAV before Vosk reads it.
+                _audio_bytes = _browser_audio["bytes"]
+                with tempfile.TemporaryDirectory() as _voice_tmpdir:
+                    _input_path = os.path.join(_voice_tmpdir, "browser_recording.webm")
+                    _output_path = os.path.join(_voice_tmpdir, "browser_recording.wav")
+                    with open(_input_path, "wb") as _audio_file:
+                        _audio_file.write(_audio_bytes)
+
+                    _conversion = subprocess.run(
+                        [
+                            "ffmpeg", "-y", "-loglevel", "error",
+                            "-i", _input_path,
+                            "-ac", "1", "-ar", "16000", "-sample_fmt", "s16",
+                            _output_path,
+                        ],
+                        capture_output=True, text=True, timeout=30,
+                    )
+                    if _conversion.returncode != 0 or not os.path.isfile(_output_path):
+                        raise RuntimeError(
+                            "Could not convert browser audio. Ensure ffmpeg is installed "
+                            "using a root-level packages.txt containing: ffmpeg"
+                        )
+
+                    with wave.open(_output_path, "rb") as _wav:
+                        _channels = _wav.getnchannels()
+                        _sample_width = _wav.getsampwidth()
+                        _sample_rate = _wav.getframerate()
+                        _frames = _wav.readframes(_wav.getnframes())
 
                 if _sample_width != 2:
                     st.error("The browser recording was not 16-bit PCM. Please try recording again.")
