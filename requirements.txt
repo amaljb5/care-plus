@@ -6,3 +6,5 @@ vosk
 sounddevice 
 pyttsx3
 streamlit-mic-recorder
+streamlit-webrtc
+av
