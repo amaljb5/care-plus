@@ -822,43 +822,46 @@ if due_reminder and page != "wellbeing":
 # ---------------- SOS: one confirmation, then open call immediately ----------------
 SOS_MEET_URL = "https://meet.google.com/dis-vmxc-cxr"  # Opens Google Meet to start a meeting.
 
-# Floating circular SOS button on the top-right of every page.
+# Floating SOS control. Use a native Streamlit button instead of a plain
+# query-string link: navigating to ?sos=1 can create a fresh Streamlit run
+# before the browser cookie is restored, which may send the user to login.
 st.markdown(
     """
     <style>
-    .careplus-sos-float {
-        position: fixed;
-        top: 18px;
-        right: 26px;
-        z-index: 999999;
-        width: 68px;
-        height: 68px;
-        border-radius: 50%;
-        background: #B91C1C;
-        border: 3px solid #FFFFFF;
-        box-shadow: 0 4px 14px rgba(0,0,0,.22);
-        color: #FFFFFF !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none !important;
-        font-size: 30px;
-        font-weight: 900;
+    div[data-testid="stElementContainer"].st-key-careplus_sos_float_button {
+        position: fixed !important;
+        top: 18px !important;
+        right: 26px !important;
+        z-index: 999999 !important;
+        width: 68px !important;
     }
-    .careplus-sos-float:hover { background: #991B1B; color: #FFFFFF !important; }
+    div.st-key-careplus_sos_float_button button {
+        width: 68px !important;
+        height: 68px !important;
+        min-height: 68px !important;
+        border-radius: 50% !important;
+        background: #B91C1C !important;
+        border: 3px solid #FFFFFF !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,.22) !important;
+        color: #FFFFFF !important;
+        font-size: 23px !important;
+        font-weight: 900 !important;
+        padding: 0 !important;
+    }
+    div.st-key-careplus_sos_float_button button:hover {
+        background: #991B1B !important;
+        color: #FFFFFF !important;
+    }
     </style>
-    <a class="careplus-sos-float" href="?sos=1" title="SOS — I Need Help" aria-label="SOS — I Need Help">SOS</a>
     """,
     unsafe_allow_html=True,
 )
-
-# Query parameter routes the floating button to the SOS confirmation page.
-try:
-    if st.query_params.get("sos") == "1":
-        page = "emergency"
-        st.session_state.sos_confirmation = True
-except Exception:
-    pass
+if st.button("SOS", key="careplus_sos_float_button", help="SOS — I Need Help"):
+    st.session_state.page = "emergency"
+    st.session_state.sos_confirmation = True
+    st.session_state.sos_submitted_id = None
+    st.rerun()
+page = st.session_state.page
 
 if page == "emergency":
     st.header("🚨 SOS — I Need Help")
