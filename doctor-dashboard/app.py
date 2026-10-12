@@ -828,6 +828,18 @@ if st.session_state.get("doctor_change_patient") or not st.session_state.doctor_
     st.stop()
 
 PATIENT_ID=str(st.session_state.doctor_patient_id)
+
+# Periodically rerun the authenticated patient workspace so fresh Firestore
+# records and status changes appear without the user manually refreshing.
+# This is polling (not a Firestore push listener).
+try:
+    from streamlit_autorefresh import st_autorefresh
+    st_autorefresh(interval=5000, key="careplus_doctor_realtime_refresh")
+except ImportError:
+    st.warning(
+        "Automatic refresh is not enabled yet. Add "
+        "`streamlit-autorefresh>=1.0.1` to this app's requirements.txt."
+    )
 PATIENT_NAME=str(st.session_state.get("doctor_patient_name",PATIENT_ID))
 sections=[("Overview","🏠  Overview"),("My Patients","👥  My Patients"),("Appointments","🗓️  Appointments"),("Consultations","🩺  Consultations"),("Medical Records","📋  Medical Records"),("Prescriptions","💊  Prescriptions"),("Notifications","🔔  Notifications"),("Settings","⚙️  Settings")]
 if "doctor_page" not in st.session_state: st.session_state.doctor_page="Overview"

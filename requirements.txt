@@ -8,3 +8,4 @@ pyttsx3
 streamlit-mic-recorder
 streamlit-webrtc
 av
+streamlit-autorefresh

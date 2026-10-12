@@ -8,6 +8,7 @@ from datetime import datetime, date, time
 from typing import Any
 
 import streamlit as st
+from streamlit_autorefresh import st_autorefresh
 import streamlit.components.v1 as components
 import extra_streamlit_components as stx
 import firebase_admin
@@ -19,6 +20,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Poll Firestore-backed views so changes made in other Care+ dashboards appear automatically.
+# This reruns the app every 5 seconds; it is polling, not a push listener.
+st_autorefresh(interval=5_000, limit=None, key="caregiver_dashboard_autorefresh")
 
 DEFAULT_ELDER_ID = "demo-elder-001"  # Fallback profile for this prototype.
 ELDER_ID = st.session_state.get("selected_elder_id", DEFAULT_ELDER_ID)

@@ -6,10 +6,11 @@ import textwrap
 import urllib.request
 import urllib.error
 import requests
-from datetime import datetime, date, time
+from datetime import datetime, timedelta, date, time
 from typing import Any
 
 import streamlit as st
+from streamlit_autorefresh import st_autorefresh
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -25,6 +26,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Re-run the app every 5 seconds so Firestore-backed pages fetch fresh records.
+# This is polling (not a Firestore push listener), so updates may take up to ~5 seconds.
+st_autorefresh(interval=5_000, limit=None, key="careplus_elderly_global_refresh")
 
 st.markdown("""
 <style>
@@ -440,6 +445,7 @@ def restore_elderly_session_from_cookie():
         _elder_cookie_manager.set(
             cookie="careplus_elderly_refresh_token",
             val=restored["refresh_token"],
+            expires_at=datetime.now() + timedelta(days=30),
             key="refresh_elderly_refresh_token",
         )
         return True
@@ -494,9 +500,12 @@ def render_elderly_login():
             if _elder_cookie_support:
                 try:
                     if remember and auth_result.get("refreshToken"):
+                        # Persist the refresh token beyond the current browser session.
+                        # Without expires_at, the browser may treat it as a session cookie.
                         _elder_cookie_manager.set(
                             cookie="careplus_elderly_refresh_token",
                             val=auth_result["refreshToken"],
+                            expires_at=datetime.now() + timedelta(days=30),
                             key="save_elderly_refresh_token",
                         )
                     else:
