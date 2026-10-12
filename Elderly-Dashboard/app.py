@@ -901,12 +901,15 @@ if page == "emergency":
                 except Exception:
                     # Still proceed to the call if Firestore is unavailable.
                     st.warning("Could not save the SOS alert, but you can still call now.")
-                st.markdown(
-                    f'<meta http-equiv="refresh" content="0;url={SOS_MEET_URL}">',
-                    unsafe_allow_html=True,
+                # Google Meet blocks iframe embedding. Use Streamlit's link button,
+                # which opens the meeting in a separate browser tab.
+                st.success("SOS alert recorded. Click below to open Google Meet in a new tab.")
+                st.link_button(
+                    "🎥 OPEN SOS GOOGLE MEET IN NEW TAB",
+                    SOS_MEET_URL,
+                    use_container_width=True,
                 )
-                st.link_button("🎥 JOIN SOS GOOGLE MEET", SOS_MEET_URL, use_container_width=True)
-                st.info("This opens the shared Care+ SOS Google Meet link. Your caregiver can use the same link to join.")
+                st.info("Your caregiver can join using the same link. Care+ does not automatically notify or join them.")
                 st.session_state.sos_confirmation = False
         with no_col:
             if st.button("❌ NO — CANCEL", use_container_width=True):
