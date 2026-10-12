@@ -27,9 +27,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Re-run the app every 5 seconds so Firestore-backed pages fetch fresh records.
-# This is polling (not a Firestore push listener), so updates may take up to ~5 seconds.
-st_autorefresh(interval=5_000, limit=None, key="careplus_elderly_global_refresh")
+# Auto-refresh is enabled below only when the user is not on the SOS screen.
+# This prevents polling from interrupting the emergency confirmation flow.
 
 st.markdown("""
 <style>
@@ -529,6 +528,11 @@ if "elder_logged_in" not in st.session_state:
     st.session_state.elder_logged_in = False
 if "page" not in st.session_state:
     st.session_state.page = "medicines"
+
+# Keep ordinary pages fresh, but pause periodic reruns on SOS so the
+# confirmation controls remain stable while the user decides what to do.
+if st.session_state.get("page") != "emergency":
+    st_autorefresh(interval=5_000, limit=None, key="careplus_elderly_global_refresh")
 
 # On refresh, Streamlit's in-memory session can reset. Restore it from the
 # Firebase refresh-token cookie when Remember me was selected.
